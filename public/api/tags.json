@@ -1,0 +1,11 @@
+{
+  "success": true,
+  "data": {
+    "推荐": [],
+    "机器学习": ["线性回归","决策树"],
+    "神经网络": ["CNN","RNN"],
+    "PS技术": ["抠图","调色"],
+    "摄影技术": ["人像","风景","食物"],
+    "后端": ["JAVA","Golang","Spring Boot","Dubbo","Kubernetes","Flask","PHP","Laveral","Rust","Mysql","Linux"]
+  }
+}

@@ -1,36 +1,42 @@
 import * as constants from "./constants";
-import { fromJS } from "immutable";
+import {fromJS} from "immutable";
 
 const defaultState = fromJS({
-  focused: false,
-  mouseIn: false,
-  list: [],
-  page: 1,
-  totalPage: 1
+    focused: false,
+    mouseIn: false,
+    list: [],
+    page: 1,
+    totalPage: 1,
+    topics: [],
+    tags:[]
 });
 
 const changeList = (state, action) => {
-  return state.merge({
-    list: action.data,
-    totalPage: action.totalPage
-  });
+    return state.merge({
+        list: action.data,
+        totalPage: action.totalPage
+    });
 };
 
 export default (state = defaultState, action) => {
-  switch (action.type) {
-    case constants.SEARCH_FOCUS:
-      return state.set("focused", true);
-    case constants.SEARCH_BLUR:
-      return state.set("focused", false);
-    case constants.CHANGE_LIST:
-      return changeList(state, action);
-    case constants.MOUSE_ENTER:
-      return state.set("mouseIn", true);
-    case constants.MOUSE_LEAVE:
-      return state.set("mouseIn", false);
-    case constants.CHANGE_PAGE:
-      return state.set("page", action.page);
-    default:
-      return state;
-  }
+    switch (action.type) {
+        case constants.SEARCH_FOCUS:
+            return state.set("focused", true);
+        case constants.SEARCH_BLUR:
+            return state.set("focused", false);
+        case constants.CHANGE_LIST:
+            return changeList(state, action);
+        case constants.MOUSE_ENTER:
+            return state.set("mouseIn", true);
+        case constants.MOUSE_LEAVE:
+            return state.set("mouseIn", false);
+        case constants.CHANGE_PAGE:
+            return state.set("page", action.page);
+        case constants.CHANGE_TOPICS:
+            return state.set("topics",action.data)
+        case constants.CHANGE_TAGS:
+            return state.set("tags",action.data)
+        default:
+            return state;
+    }
 };

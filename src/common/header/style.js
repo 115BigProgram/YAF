@@ -1,10 +1,13 @@
 import styled from "styled-components";
 import logoPic from "../../statics/logo.png";
+import {blue} from "@ant-design/colors"
 
+const headerHeight = 56 ;
+const leftPadding =20;
 export const HeaderWrapper = styled.div`
   z-index: 1;
   position: relative;
-  height: 56px;
+  height: ${headerHeight}px;
   border-bottom: 1px solid #f0f0f0;
 `;
 
@@ -63,7 +66,7 @@ export const SearchWrapper = styled.div`
 `;
 
 export const NavSearch = styled.input.attrs({
-  placeholder: "搜索"
+    placeholder: "搜索"
 })`
   width: 160px;
   height: 38px;
@@ -170,3 +173,51 @@ export const Button = styled.div`
     background: #ec6149;
   }
 `;
+
+export const TopicWrapper = styled.div`
+  display:flex;
+  align-items:center;
+  margin-top: 3px;
+  border-width: 10px;
+  border-bottom: 1px solid #f0f0f0;
+  height: ${headerHeight/3*2}px;
+  backgroud-color: #ffffff;
+  padding-left:${leftPadding}px;
+  width: 100%;
+`
+
+export const TopicItem = styled.div`
+  margin:1px;
+  margin-left: 2px;
+  margin-right: 5px;
+  text-align:center;
+  cursor:pointer;
+  font-size: ${headerHeight/10*3}px;
+  
+  &:hover {
+    color: cadetblue;
+  }
+`
+
+export const TagWrapper = styled.div`
+  width:30vw;
+  display:flex;
+  flex-wrap: wrap;
+  align-items:center;
+  margin-top: 1px;
+  border-width: 10px;
+  border-bottom: 1px solid #f0f0f0;
+  padding-left:${leftPadding}px;
+`
+
+export const TagItem =styled.div`
+  padding: 3px;
+  margin-right: 15px;
+  text-align:center;
+  cursor:pointer;
+  font-size: ${headerHeight/12*3}px;
+  
+  &:hover {
+    color: cadetblue;
+  }
+`

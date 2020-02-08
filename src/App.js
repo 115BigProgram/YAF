@@ -7,7 +7,7 @@ import Detail from "./pages/detail/loadable.js";
 import Login from "./pages/login";
 import Write from "./pages/write";
 import store from "./store";
-
+import 'antd/dist/antd.css';
 class App extends Component {
   render() {
     return (
