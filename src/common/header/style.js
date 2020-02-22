@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import logoPic from "../../statics/logo.png";
-import {blue} from "@ant-design/colors"
+import { ContentHorizontalPadding,ContentLength,DesktopMiniWidth } from "../../constvars"
 
 const headerHeight = 56 ;
 const leftPadding =20;
@@ -178,13 +178,15 @@ export const Button = styled.div`
 export const TopicWrapper = styled.div`
   display:flex;
   align-items:center;
-  margin-top: 3px;
+  background-color: aqua;
   border-width: 10px;
   border-bottom: 1px solid #f0f0f0;
   height: ${headerHeight/3*2}px;
-  backgroud-color: #ffffff;
-  padding-left:${leftPadding}px;
-  width: 100%;
+  position: fixed;
+  @media (min-width: ${DesktopMiniWidth}){
+    width: ${ContentLength};
+    margin-left: ${ContentHorizontalPadding};
+  }
 `
 
 export const TopicItem = styled.div`
@@ -201,13 +203,17 @@ export const TopicItem = styled.div`
 `
 
 export const TagWrapper = styled.div`
-  width:30vw;
   display:flex;
   flex-wrap: wrap;
   align-items:center;
   margin-top: 1px;
   border-width: 10px;
-  border-bottom: 1px solid #f0f0f0;
+  background-color: chocolate;
+  position: fixed;
+  @media (min-width: ${DesktopMiniWidth}){
+    width: ${ContentLength};
+    margin-left: ${ContentHorizontalPadding};
+  }
   padding-left:${leftPadding}px;
 `
 
