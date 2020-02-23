@@ -34,7 +34,6 @@ export const Nav = styled.div`
   display: flex;
   flex-wrap: nowrap;
   align-items: center;
-  overflow-x: auto;
 `;
 
 export const NavItem = styled.div`
@@ -54,6 +53,8 @@ export const NavItem = styled.div`
 
 export const SearchWrapper = styled.div`
   position: relative;
+  z-index: 3;
+  top:0;
   .zoom {
     position: absolute;
     right: 5px;
@@ -72,7 +73,6 @@ export const SearchWrapper = styled.div`
 export const NavSearch = styled.input.attrs({
     placeholder: "搜索"
 })`
-  z-index: 3;
   width: 160px;
   height: 38px;
   padding: 0 30px 0 20px;
@@ -107,8 +107,7 @@ export const NavSearch = styled.input.attrs({
 
 export const SearchInfo = styled.div`
   position: absolute;
-  z-index: 5;
-  left: 0;
+  z-index: auto;
   top: 56px;
   width: 240px;
   padding: 0 20px;
