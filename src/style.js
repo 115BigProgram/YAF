@@ -1,4 +1,5 @@
-import { injectGlobal } from "styled-components";
+import styled, { injectGlobal } from "styled-components";
+import {ContentHorizontalPadding, ContentLength, TopNavBarHeight,DesktopMiniWidth} from "./constvars";
 
 injectGlobal`
 	html, body, div, span, applet, object, iframe,
@@ -14,6 +15,7 @@ injectGlobal`
 	figure, figcaption, footer, header, hgroup, 
 	menu, nav, output, ruby, section, summary,
 	time, mark, audio, video {
+	    box-sizing: border-box;
 		margin: 0;
 		padding: 0;
 		border: 0;
@@ -45,3 +47,24 @@ injectGlobal`
 		border-spacing: 0;
 	}
 `;
+
+export const MainContainer = styled.div`
+  margin-top:${TopNavBarHeight}px;
+  background-color: #F8F8F8;
+  padding-top:15px;
+`
+
+export const ContentContainer =styled.div`
+  @media (min-width: ${DesktopMiniWidth}px){
+    margin-left:${ContentHorizontalPadding};
+    width:${ContentLength};
+  }
+`
+
+export const TopNavBarContainer = styled.div`
+  position:fixed;
+  top: 0;
+  width:100%;
+  background-color: white; 
+`
+

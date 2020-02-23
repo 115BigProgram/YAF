@@ -13,10 +13,6 @@ const changeTopic = data => ({
     data: fromJS(data)
 })
 
-const changeTags = (data) => ({
-    type: constants.CHANGE_TAGS,
-    data: data
-})
 
 export const searchFocus = () => ({
     type: constants.SEARCH_FOCUS
@@ -67,20 +63,3 @@ export const getTopics = () => {
     }
 }
 
-export const getTags= (idx) => {
-    return (dispatch,getState) => {
-        axios
-            .get("/api/tags.json")
-            .then(res => {
-                const topic_tags = res.data.data
-                const {topics} = getState().toJS().header
-                const topic=topics[idx]
-                let data=topic_tags[topic]
-
-                dispatch(changeTags(data))
-            })
-            .catch(()=>{
-                console.log("error")
-            })
-    }
-}

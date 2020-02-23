@@ -15,6 +15,11 @@ const addHomeList = (list, nextPage) => ({
   nextPage
 });
 
+const changeTags = (data) => ({
+    type: constants.CHANGE_TAGS,
+    data: data
+})
+
 export const getHomeInfo = () => {
   return dispatch => {
     axios.get("/api/home.json").then(res => {
@@ -37,3 +42,21 @@ export const toggleTopShow = show => ({
   type: constants.TOGGLE_SCROLL_TOP,
   show
 });
+
+export const getTags= (idx) => {
+  return (dispatch,getState) => {
+    axios
+        .get("/api/tags.json")
+        .then(res => {
+          const topic_tags = res.data.data
+          const {topics} = getState().toJS().header
+          const topic=topics[idx]
+          let data=topic_tags[topic]
+
+          dispatch(changeTags(data))
+        })
+        .catch(()=>{
+          console.log("error")
+        })
+  }
+}

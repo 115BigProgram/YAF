@@ -4,6 +4,7 @@ import {Link} from "react-router-dom";
 import {CSSTransition} from "react-transition-group";
 import {actionCreators} from "./store";
 import {actionCreators as loginActionCreators} from "../../pages/login/store";
+import {actionCreators as HomeContentCreator} from "../../pages/home/store"
 import {Typography} from "antd"
 import {
     HeaderWrapper,
@@ -19,7 +20,7 @@ import {
     SearchInfoItem,
     Addition,
     Button,
-    TopicItem, TopicWrapper, TagWrapper, TagItem
+    TopicItem, TopicWrapper, TagWrapper, TagItem, SearchWrapperOuter
 } from "./style";
 
 const {Text} = Typography
@@ -29,21 +30,6 @@ class Header extends Component {
     componentDidMount() {
         this.props.handleGetTopic()
         this.props.handleChangeTags(0)
-    }
-
-    getTags() {
-        const {tags}=  this.props
-
-        const tagsItem = []
-        tags.map((tag, idx) => {
-            tagsItem.push(
-                <TagItem  key={idx}>
-                    {tag}
-                </TagItem>
-            )
-        })
-
-        return tagsItem
     }
 
     getTopics() {
@@ -129,11 +115,13 @@ class Header extends Component {
         return (
             <div>
                 <HeaderWrapper>
-                    <Link to="/">
-                        <Logo/>
-                    </Link>
                     <Nav>
-                        <NavItem className="left active">首页</NavItem>
+                        <Link to="/">
+                            <Logo/>
+                        </Link>
+                        <Link to="/">
+                            <NavItem className="left active">首页</NavItem>
+                        </Link>
                         <NavItem className="left">下载App</NavItem>
                         {login ? (
                             <NavItem onClick={logout} className="right">
@@ -160,23 +148,20 @@ class Header extends Component {
                             </i>
                             {this.getListArea()}
                         </SearchWrapper>
+                        <Addition>
+                            <Link to="/write">
+                                <Button className="writting">
+                                    <i className="iconfont">&#xe615;</i>
+                                    写文章
+                                </Button>
+                            </Link>
+                            <Button className="reg">注册</Button>
+                        </Addition>
                     </Nav>
-                    <Addition>
-                        <Link to="/write">
-                            <Button className="writting">
-                                <i className="iconfont">&#xe615;</i>
-                                写文章
-                            </Button>
-                        </Link>
-                        <Button className="reg">注册</Button>
-                    </Addition>
                 </HeaderWrapper>
-                <TopicWrapper>
-                    {this.getTopics()}
-                </TopicWrapper>
-                <TagWrapper>
-                    {this.getTags()}
-                </TagWrapper>
+                < TopicWrapper >
+                    { this.getTopics() }
+                </ TopicWrapper >
             </div>
         );
     }
@@ -232,7 +217,7 @@ const mapDispathToProps = dispatch => {
             dispatch(loginActionCreators.logout());
         },
         handleChangeTags(idx){
-            dispatch(actionCreators.getTags(idx))
+            dispatch(HomeContentCreator.getTags(idx))
         }
     };
 };

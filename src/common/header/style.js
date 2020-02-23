@@ -1,56 +1,59 @@
 import styled from "styled-components";
 import logoPic from "../../statics/logo.png";
-import { ContentHorizontalPadding,ContentLength,DesktopMiniWidth } from "../../constvars"
+import { ContentHorizontalPadding,ContentLength,DesktopMiniWidth,TopNavBarHeight } from "../../constvars"
+import {Content} from "../../pages/detail/style";
 
-const headerHeight = 56 ;
-const leftPadding =20;
+
+const toolBarHeight = TopNavBarHeight/3*2 ;
+const topicBarHeight =toolBarHeight/2;
+
+const navFontSize = 17;
+const navDivMiniSize  = navFontSize*4;
+
+
 export const HeaderWrapper = styled.div`
   z-index: 1;
   position: relative;
-  height: ${headerHeight}px;
+  height: ${toolBarHeight}px;
   border-bottom: 1px solid #f0f0f0;
 `;
 
 export const Logo = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  display: block;
   width: 100px;
-  height: 56px;
+  height: 50px;
   background: url(${logoPic});
   background-size: contain;
 `;
 
 export const Nav = styled.div`
-  width: 960px;
-  height: 100%;
-  padding-right: 70px;
-  box-sizing: border-box;
-  margin: 0 auto;
+  height: 95%;
+  @media (min-width: ${DesktopMiniWidth}px){
+    margin-left:${ContentHorizontalPadding};
+    width: ${ContentLength};
+  }
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  overflow-x: auto;
 `;
 
 export const NavItem = styled.div`
   line-height: 56px;
   padding: 0 15px;
-  font-size: 17px;
+  font-size: ${navFontSize}px;
   color: #333;
   cursor:pointer;
-  &.left {
-    float: left;
-  }
-  &.right {
-    float: right;
-    color: #969696;
-  }
+  min-width: ${navDivMiniSize}px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
   &.active {
     color: #ea6f5a;
   }
 `;
 
+
 export const SearchWrapper = styled.div`
   position: relative;
-  float: left;
   .zoom {
     position: absolute;
     right: 5px;
@@ -69,6 +72,7 @@ export const SearchWrapper = styled.div`
 export const NavSearch = styled.input.attrs({
     placeholder: "搜索"
 })`
+  z-index: 3;
   width: 160px;
   height: 38px;
   padding: 0 30px 0 20px;
@@ -103,6 +107,7 @@ export const NavSearch = styled.input.attrs({
 
 export const SearchInfo = styled.div`
   position: absolute;
+  z-index: 5;
   left: 0;
   top: 56px;
   width: 240px;
@@ -151,14 +156,12 @@ export const SearchInfoItem = styled.a`
 `;
 
 export const Addition = styled.div`
-  position: absolute;
-  right: 0;
-  top: 0;
-  height: 56px;
+  margin-left:auto;
+  display: flex;
+  flex-wrap:nowrap;
 `;
 
 export const Button = styled.div`
-  float: right;
   margin-top: 9px;
   margin-right: 20px;
   padding: 0 20px;
@@ -181,12 +184,12 @@ export const TopicWrapper = styled.div`
   background-color: aqua;
   border-width: 10px;
   border-bottom: 1px solid #f0f0f0;
-  height: ${headerHeight/3*2}px;
-  position: fixed;
-  @media (min-width: ${DesktopMiniWidth}){
+  height: ${TopNavBarHeight/3}px;
+  @media (min-width: ${DesktopMiniWidth}px){
     width: ${ContentLength};
     margin-left: ${ContentHorizontalPadding};
   }
+  overflow-x: auto;
 `
 
 export const TopicItem = styled.div`
@@ -195,36 +198,11 @@ export const TopicItem = styled.div`
   margin-right: 5px;
   text-align:center;
   cursor:pointer;
-  font-size: ${headerHeight/10*3}px;
-  
+  flex-wrap: nowrap;
+  white-space: nowrap;
+  min-width:56px;        
   &:hover {
-    color: cadetblue;
+  text-overflow:ellipsis;  color: cadetblue;
   }
 `
 
-export const TagWrapper = styled.div`
-  display:flex;
-  flex-wrap: wrap;
-  align-items:center;
-  margin-top: 1px;
-  border-width: 10px;
-  background-color: chocolate;
-  position: fixed;
-  @media (min-width: ${DesktopMiniWidth}){
-    width: ${ContentLength};
-    margin-left: ${ContentHorizontalPadding};
-  }
-  padding-left:${leftPadding}px;
-`
-
-export const TagItem =styled.div`
-  padding: 3px;
-  margin-right: 15px;
-  text-align:center;
-  cursor:pointer;
-  font-size: ${headerHeight/12*3}px;
-  
-  &:hover {
-    color: cadetblue;
-  }
-`

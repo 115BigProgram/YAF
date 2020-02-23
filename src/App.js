@@ -8,17 +8,26 @@ import Login from "./pages/login";
 import Write from "./pages/write";
 import store from "./store";
 import 'antd/dist/antd.css';
+import {ContentContainer, MainContainer, TopNavBarContainer} from "./style";
 class App extends Component {
   render() {
     return (
       <Provider store={store}>
         <BrowserRouter>
           <div>
-            <Header />
-            <Route path="/" exact component={Home} />
-            <Route path="/login" exact component={Login} />
-            <Route path="/write" exact component={Write} />
-            <Route path="/detail/:id" exact component={Detail} />
+            <TopNavBarContainer>
+              <Header />
+            </TopNavBarContainer>
+            <div>
+              <MainContainer>
+                <ContentContainer>
+                  <Route path="/" exact component={Home} />
+                  <Route path="/login" exact component={Login} />
+                  <Route path="/write" exact component={Write} />
+                  <Route path="/detail/:id" exact component={Detail} />
+                </ContentContainer>
+              </MainContainer>
+            </div>
           </div>
         </BrowserRouter>
       </Provider>

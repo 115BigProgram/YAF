@@ -34,8 +34,6 @@ export default (state = defaultState, action) => {
             return state.set("page", action.page);
         case constants.CHANGE_TOPICS:
             return state.set("topics",action.data)
-        case constants.CHANGE_TAGS:
-            return state.set("tags",action.data)
         default:
             return state;
     }

@@ -1,25 +1,34 @@
 import styled from "styled-components";
+import {ContentHorizontalPadding, ContentLength, DesktopMiniWidth} from "../../constvars";
+
 
 export const HomeWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
   overflow: hidden;
-  width: 960px;
+  width: 100%;
   margin: 0 auto;
 `;
 
 export const HomeLeft = styled.div`
-  float: left;
-  margin-left: 15px;
+  padding: 15px;
   padding-top: 30px;
-  width: 625px;
+  @media (min-width: ${DesktopMiniWidth}px){
+    width: 70%;
+  }
   .banner-img {
     width: 625px;
     height: 270px;
   }
+  background-color: white; 
 `;
 
 export const HomeRight = styled.div`
-  width: 280px;
-  float: right;
+  width: 28%;
+  @media (max-width: ${DesktopMiniWidth}px){
+    display: none;
+  }
+  background-color: white; 
 `;
 
 export const TopicWrapper = styled.div`
@@ -54,6 +63,8 @@ export const ListItem = styled.div`
   overflow: hidden;
   padding: 20px 0;
   border-bottom: 1px solid #dcdcdc;
+  width: 100%;
+  
   .pic {
     display: block;
     width: 125px;
@@ -64,12 +75,13 @@ export const ListItem = styled.div`
 `;
 
 export const ListInfo = styled.div`
-  width: 500px;
-  float: left;
+  width: 98%;
   .title {
     line-height: 27px;
     font-size: 18px;
     font-weight: bold;
+    max-width: 98%;
+    text-overflow:ellipsis;
     color: #333;
   }
   .desc {
@@ -123,3 +135,24 @@ export const BackTop = styled.div`
   border: 1px solid #ccc;
   font-size: 14px;
 `;
+
+export const TagWrapper = styled.div`
+  display:flex;
+  flex-wrap: wrap;
+  align-items:center;
+  margin-top: 1px;
+  border-width: 10px;
+  background-color: chocolate;
+  width:100%;
+`
+
+export const TagItem =styled.div`
+  padding: 3px;
+  margin-right: 15px;
+  text-align:center;
+  cursor:pointer;
+  
+  &:hover {
+    color: cadetblue;
+  }
+`

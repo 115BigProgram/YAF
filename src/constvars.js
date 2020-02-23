@@ -9,7 +9,7 @@ for(let i=0;i<totCol;i++) {
 export {cols as Cols}
 export const ContentHorizontalPadding = "20%"
 export const ContentLength = "60%"
-export const TopNavBarHeight = "50px"
+export const TopNavBarHeight = 120
 
-export const DesktopMiniWidth = "768px"
-export const TabletMiniWidth  = "600px"
+export const DesktopMiniWidth = 768
+export const TabletMiniWidth  = 600
