@@ -1,19 +1,28 @@
 import React, { PureComponent } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { DetailWrapper, Header, Content } from "./style";
+import { DetailWrapper, Header, Content, ArticleWrapper, StepBarWrapper, ToolBarWrapper, EmptyDiv, FixedInStepBarWrapper } from "./style";
 import MarkdownRenderer from "../../markdown/index"
 import { actionCreators } from "./store";
-import ReactMarkdown from "react-markdown"
+import ArticleStepBar from "./components/stepbar";
 
 class Detail extends PureComponent {
   render() {
     let input="# test \n [ ] 123 $$ A $$"
     return (
-      <DetailWrapper>
-        <Header>{this.props.title}</Header>
-        <MarkdownRenderer source={this.props.content}></MarkdownRenderer>
+      <div>
+        <DetailWrapper>
+        <StepBarWrapper>
+          <FixedInStepBarWrapper>
+          <ArticleStepBar/>
+          </FixedInStepBarWrapper>
+        </StepBarWrapper>
+        <ArticleWrapper>
+          <Header>{this.props.title}</Header>
+          <MarkdownRenderer source={this.props.content}></MarkdownRenderer>
+        </ArticleWrapper>
       </DetailWrapper>
+      </div>
     );
   }
 
