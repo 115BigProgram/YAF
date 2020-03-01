@@ -142,9 +142,6 @@ class Header extends Component {
                               <NavItem>
                                   TEST
                               </NavItem>
-                              <NavItem>
-                                  TEST2
-                              </NavItem>
                             </NonHomeItemWrapper>
                             </NavWrapper>
                         <SearchWrapper>

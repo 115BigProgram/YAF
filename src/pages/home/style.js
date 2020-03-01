@@ -62,6 +62,9 @@ export const TopicItem = styled.div`
 export const ListItem = styled.div`
   overflow: hidden;
   padding: 20px 0;
+  :first{
+    padding-top:5px;
+  }
   border-bottom: 1px solid #dcdcdc;
   width: 100%;
   

@@ -3,6 +3,8 @@ import React, { Component } from "react";
 import * as ReactMarkdown from "react-markdown";
 import MathJax from "@matejmazur/react-mathjax";
 import RemarkMathPlugin  from "remark-math";
+import Codeblock from "./renderer/codeblock"
+import markdown from "marked"
 
 class MarkdownRenderer extends Component{
   render(){
@@ -21,14 +23,13 @@ class MarkdownRenderer extends Component{
       ],
       renderers: {
         ...props.renderers,
+        code: Codeblock,
         math: () =>{
-          console.log("Block Math Value", props)
             return(
           <MathJax.Node  formula={props.value}/>
         )
           },
         inlineMath: () => {
-          console.log("Inline Math Value", props)
           return(
             <MathJax.Node inline formula={props.value}/>
           )
@@ -36,6 +37,7 @@ class MarkdownRenderer extends Component{
       }
     };
 
+    let md=markdown.parse(this.props.source);
     return (
       <MathJax.Context input="tex">
         <ReactMarkdown {...newProps} />

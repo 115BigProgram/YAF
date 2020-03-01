@@ -38,7 +38,6 @@ class Home extends Component {
           </TagWrapper>
           <HomeWrapper>
             <HomeLeft>
-              <Topic />
               <List />
             </HomeLeft>
             <HomeRight>

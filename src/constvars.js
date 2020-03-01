@@ -11,5 +11,5 @@ export const ContentHorizontalPadding = "20%"
 export const ContentLength = "60%"
 export const TopNavBarHeight = 120
 
-export const DesktopMiniWidth = 768
+export const DesktopMiniWidth = 1100
 export const TabletMiniWidth  = 600

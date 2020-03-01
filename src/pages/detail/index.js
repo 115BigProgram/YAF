@@ -2,14 +2,17 @@ import React, { PureComponent } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { DetailWrapper, Header, Content } from "./style";
+import MarkdownRenderer from "../../markdown/index"
 import { actionCreators } from "./store";
+import ReactMarkdown from "react-markdown"
 
 class Detail extends PureComponent {
   render() {
+    let input="# test \n [ ] 123 $$ A $$"
     return (
       <DetailWrapper>
         <Header>{this.props.title}</Header>
-        <Content dangerouslySetInnerHTML={{ __html: this.props.content }} />
+        <MarkdownRenderer source={this.props.content}></MarkdownRenderer>
       </DetailWrapper>
     );
   }
