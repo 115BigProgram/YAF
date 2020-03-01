@@ -8,7 +8,7 @@ const toolBarHeight = TopNavBarHeight/3*2 ;
 const topicBarHeight =toolBarHeight/2;
 
 const navFontSize = 17;
-const navDivMiniSize  = navFontSize*4;
+const navDivMiniSize  = navFontSize*1.5;
 
 
 export const HeaderWrapper = styled.div`
@@ -16,17 +16,7 @@ export const HeaderWrapper = styled.div`
   position: relative;
   height: ${toolBarHeight}px;
   border-bottom: 1px solid #f0f0f0;
-`;
 
-export const Logo = styled.div`
-  width: 100px;
-  height: 50px;
-  background: url(${logoPic});
-  background-size: contain;
-`;
-
-export const Nav = styled.div`
-  height: 95%;
   @media (min-width: ${DesktopMiniWidth}px){
     margin-left:${ContentHorizontalPadding};
     width: ${ContentLength};
@@ -34,11 +24,57 @@ export const Nav = styled.div`
   display: flex;
   flex-wrap: nowrap;
   align-items: center;
+
+`;
+
+export const Logo = styled.div`
+  width: 100px;
+  height: 50px;
+  @media(max-width: ${DesktopMiniWidth}px){
+    width: 75px;
+    height: 37.5px;
+  }
+  background: url(${logoPic});
+  background-size: contain;
+`;
+
+export const NavWrapper = styled.div`
+  position: relative;
+  display:flex;
+  align-items:center;
+`
+export const NavItemShowButton = styled.span`
+  &.arrow{
+      ::after{
+        @media (max-width: ${DesktopMiniWidth}px){
+          content:"↓"
+        }
+      }
+  }
+`
+export const NonHomeItemWrapper = styled.div`
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  @media(max-width: ${DesktopMiniWidth}px){
+    display:${props => props.show ? "block":"none"};
+    flex-direction:column;
+    position:absolute;
+    background-color:white;
+    align-items:flex-start;
+    top:${toolBarHeight*1/2}px;
+    left:auto;
+  }
 `;
 
 export const NavItem = styled.div`
   line-height: 56px;
   padding: 0 15px;
+  &.home{
+    @media(max-width: ${DesktopMiniWidth}px){
+      padding:0px;
+    }
+  }
   font-size: ${navFontSize}px;
   color: #333;
   cursor:pointer;
@@ -49,6 +85,9 @@ export const NavItem = styled.div`
     color: #ea6f5a;
   }
 `;
+
+export const PhoneNavDownScrollPannel = styled.div`
+`
 
 
 export const SearchWrapper = styled.div`
@@ -74,10 +113,17 @@ export const NavSearch = styled.input.attrs({
     placeholder: "搜索"
 })`
   width: 160px;
-  height: 38px;
   padding: 0 30px 0 20px;
-  margin-top: 9px;
-  margin-left: 20px;
+  height: 38px;
+  @media (min-width:${DesktopMiniWidth}) {
+    margin-left: 20px;
+  }
+
+  @media (max-width:${DesktopMiniWidth}) {
+    margin: 0px;
+    margin-left:2px;
+    padding: 0px;
+  }
   box-sizing: border-box;
   border: none;
   outline: none;
@@ -161,13 +207,14 @@ export const Addition = styled.div`
 `;
 
 export const Button = styled.div`
-  margin-top: 9px;
-  margin-right: 20px;
-  padding: 0 20px;
-  line-height: 38px;
-  border-radius: 19px;
   border: 1px solid #ec6149;
-  font-size: 14px;
+  min-width: 55px;
+  padding:0px;
+  margin-right:3px;
+  padding-right:0px;
+  border-radius:5px;
+  line-height: 30px;
+  text-align:center;
   &.reg {
     color: #ec6149;
   }

@@ -9,8 +9,10 @@ import Write from "./pages/write";
 import store from "./store";
 import 'antd/dist/antd.css';
 import {ContentContainer, MainContainer, TopNavBarContainer} from "./style";
+import MarkdownRenderer from "./markdown";
 class App extends Component {
   render() {
+    let input = "let "
     return (
       <Provider store={store}>
         <BrowserRouter>

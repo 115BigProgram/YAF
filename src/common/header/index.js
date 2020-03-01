@@ -9,7 +9,7 @@ import {Typography} from "antd"
 import {
     HeaderWrapper,
     Logo,
-    Nav,
+    NonHomeItemWrapper,
     NavItem,
     SearchWrapper,
     NavSearch,
@@ -20,16 +20,27 @@ import {
     SearchInfoItem,
     Addition,
     Button,
-    TopicItem, TopicWrapper, TagWrapper, TagItem, SearchWrapperOuter
+    TopicItem, TopicWrapper, TagWrapper, TagItem, SearchWrapperOuter, NavWrapper, NavItemShowButton
 } from "./style";
 
 const {Text} = Typography
 
 class Header extends Component {
+    constructor(props){
+        super(props)
+        this.state={NavItemShow:false}
+    }
 
     componentDidMount() {
         this.props.handleGetTopic()
         this.props.handleChangeTags(0)
+    }
+
+    showItem(){
+        let preValue=this.state.NavItemShow
+        this.setState({
+            NavItemShow:!preValue
+        })
     }
 
     getTopics() {
@@ -115,26 +126,27 @@ class Header extends Component {
         return (
             <div>
                 <HeaderWrapper>
-                    <Nav>
                         <Link to="/">
                             <Logo/>
                         </Link>
-                        <Link to="/">
-                            <NavItem className="left active">首页</NavItem>
-                        </Link>
-                        <NavItem className="left">下载App</NavItem>
-                        {login ? (
-                            <NavItem onClick={logout} className="right">
-                                退出
-                            </NavItem>
-                        ) : (
-                            <Link to="/login">
-                                <NavItem className="right">登陆</NavItem>
+                        <NavWrapper>
+                            <Link to="/">
+                                <NavItem className="active home">首页</NavItem>
                             </Link>
-                        )}
-                        <NavItem className="right">
-                            <i className="iconfont">&#xe636;</i>
-                        </NavItem>
+                            <NavItemShowButton className="arrow" onClick={this.showItem.bind(this)}></NavItemShowButton>
+                            <NonHomeItemWrapper show={this.state.NavItemShow}>
+                              <NavItem className="left">下载App</NavItem>
+                              <NavItem className="right">
+                                  <i className="iconfont">&#xe636;</i>
+                              </NavItem>
+                              <NavItem>
+                                  TEST
+                              </NavItem>
+                              <NavItem>
+                                  TEST2
+                              </NavItem>
+                            </NonHomeItemWrapper>
+                            </NavWrapper>
                         <SearchWrapper>
                             <CSSTransition in={focused} timeout={200} classNames="slide">
                                 <NavSearch
@@ -149,15 +161,19 @@ class Header extends Component {
                             {this.getListArea()}
                         </SearchWrapper>
                         <Addition>
-                            <Link to="/write">
+                            {login ? (
+                                <Button className="writting" onClick={logout}>
+                                    退出
+                                </Button>
+                            ):(
+                            <Link to="/login">
                                 <Button className="writting">
-                                    <i className="iconfont">&#xe615;</i>
-                                    写文章
+                                    登陆
                                 </Button>
                             </Link>
+                            )}
                             <Button className="reg">注册</Button>
                         </Addition>
-                    </Nav>
                 </HeaderWrapper>
                 < TopicWrapper >
                     { this.getTopics() }
