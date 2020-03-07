@@ -16,6 +16,9 @@ export const HomeLeft = styled.div`
   @media (min-width: ${DesktopMiniWidth}px){
     width: 70%;
   }
+  @media (max-width: ${DesktopMiniWidth}px){
+    width:100%;
+  }
   .banner-img {
     width: 625px;
     height: 270px;
