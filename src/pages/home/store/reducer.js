@@ -1,20 +1,21 @@
 import { fromJS } from "immutable";
 import * as constants from "./constants";
+import { setTopic } from "./actionCreators";
 
 const defaultState = fromJS({
-  topicList: [],
   articleList: [],
   recommendList: [],
   articlePage: 1,
   showScroll: false,
-  tags:[]
+  tags:[],
+  topics:[],
+  tag:Object,
+  topic:Object
 });
 
 const changeHomeData = (state, action) => {
   return state.merge({
-    topicList: fromJS(action.topicList),
     articleList: fromJS(action.articleList),
-    recommendList: fromJS(action.recommendList)
   });
 };
 
@@ -25,6 +26,33 @@ const addArticleList = (state, action) => {
   });
 };
 
+const changeTopic = (state,action) =>{
+  let tag={}
+  if (action.data.tags.length==0){
+    tag=undefined
+  }else{
+    tag=action.data.tags[0]
+  }
+  return state.merge({
+    tags:fromJS(action.data.tags),
+    topic:fromJS(action.data.topic),
+    tag:fromJS(tag)
+  })
+}
+
+const setTopics = (state,action) => {
+  let topic={};
+  if (action.data.topics.length==0){
+    topic=undefined
+  }else{
+    topic=action.data.topics[0]
+  }
+  return state.merge({
+    topics:fromJS(action.data.topics),
+    topic:fromJS(topic)
+  })
+}
+
 export default (state = defaultState, action) => {
   switch (action.type) {
     case constants.CHANGE_HOME_DATA:
@@ -34,7 +62,11 @@ export default (state = defaultState, action) => {
     case constants.TOGGLE_SCROLL_TOP:
       return state.set("showScroll", action.show);
     case constants.CHANGE_TAGS:
-      return state.set("tags",action.data)
+      return changeTopic(state,action)
+    case constants.CHANGE_TOPICS:
+      return setTopics(state,action)
+    case constants.SET_TAG:
+      return state.set("tag",fromJS(action.data.tag))
     default:
       return state;
   }

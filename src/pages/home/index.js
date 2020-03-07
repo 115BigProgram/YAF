@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import Topic from "./components/Topic";
 import List from "./components/List";
 import Recommend from "./components/Recommend";
 import Writer from "./components/Writer";
 import { actionCreators } from "./store";
 import {BackTop } from "./style";
+import {toJS} from "immutable";
 
 import { HomeWrapper, HomeLeft, HomeRight,TagWrapper,TagItem } from "./style";
 
@@ -16,13 +16,16 @@ class Home extends Component {
 
 
   getTags() {
-    const {tags}=  this.props
+    const {
+      tags,
+      handleSetTag
+    }=  this.props
 
     const tagsItem = []
-    tags.map((tag, idx) => {
+    tags.toJS().map((tag, idx) => {
       tagsItem.push(
-          <TagItem  key={idx}>
-            {tag}
+          <TagItem  key={idx} onClick={()=>handleSetTag(idx)}>
+            {tag.name}
           </TagItem>
       )
     })
@@ -80,8 +83,8 @@ const mapDispatch = dispatch => ({
       actionCreators.toggleTopShow(document.documentElement.scrollTop > 100)
     );
   },
-  handleChangeTags(idx){
-    dispatch(actionCreators.getTags(idx))
+  handleSetTag(idx){
+    dispatch(actionCreators.setTag(idx))
   }
 });
 

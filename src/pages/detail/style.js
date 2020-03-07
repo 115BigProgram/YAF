@@ -23,7 +23,7 @@ export const FixedInStepBarWrapper =styled.div`
 `
 
 export const ArticleWrapper = styled.div`
-  width:auto;
+  width:100%;
   margin-left:auto;
   min-height:100vh;
   overflow:auto;

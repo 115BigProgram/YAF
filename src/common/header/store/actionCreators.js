@@ -54,11 +54,12 @@ export const getTopics = () => {
         axios
             .get("/api/topics.json")
             .then(res => {
-                const data = res.data;
-                dispatch(changeTopic(data.data))
+                const raw = res.data.data;
+                let data=raw
+                dispatch(changeTopic(data))
             })
-            .catch(() => {
-                console.log("error")
+            .catch((err) => {
+                console.log(err)
             })
     }
 }

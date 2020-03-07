@@ -33,7 +33,6 @@ class Header extends Component {
 
     componentDidMount() {
         this.props.handleGetTopic()
-        this.props.handleChangeTags(0)
     }
 
     showItem(){
@@ -46,15 +45,15 @@ class Header extends Component {
     getTopics() {
         const {
             topics,
-            handleChangeTags
+            handleChangeTopic
         } = this.props;
 
         const newTopics = topics.toJS()
         const topicItems = []
         newTopics.map((item, idx) => {
             topicItems.push(
-                <TopicItem  onClick={()=>handleChangeTags(idx)} key={idx}>
-                    {item}
+                <TopicItem  onClick={()=>handleChangeTopic(idx)} key={idx}>
+                    {item.name}
                 </TopicItem>
             )
         })
@@ -191,7 +190,7 @@ const mapStateToProps = state => {
         totalPage: state.getIn(["header", "totalPage"]),
         mouseIn: state.getIn(["header", "mouseIn"]),
         login: state.getIn(["login", "login"]),
-        topics: state.getIn(["header", "topics"]),
+        topics: state.getIn(["home", "topics"]),
         tags:state.getIn(["header","tags"])
     };
 };
@@ -227,13 +226,13 @@ const mapDispathToProps = dispatch => {
             }
         },
         handleGetTopic() {
-            dispatch(actionCreators.getTopics())
+            dispatch(HomeContentCreator.getTopics())
         },
         logout() {
             dispatch(loginActionCreators.logout());
         },
-        handleChangeTags(idx){
-            dispatch(HomeContentCreator.getTags(idx))
+        handleChangeTopic(idx){
+            dispatch(HomeContentCreator.setTopic(idx))
         }
     };
 };

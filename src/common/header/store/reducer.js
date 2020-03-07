@@ -7,8 +7,7 @@ const defaultState = fromJS({
     list: [],
     page: 1,
     totalPage: 1,
-    topics: [],
-    tags:[]
+    topics: []
 });
 
 const changeList = (state, action) => {

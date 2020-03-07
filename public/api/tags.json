@@ -2,10 +2,7 @@
   "success": true,
   "data": {
     "推荐": [],
-    "机器学习": ["线性回归","决策树"],
-    "神经网络": ["CNN","RNN"],
-    "PS技术": ["抠图","调色"],
-    "摄影技术": ["人像","风景","食物"],
-    "后端": ["JAVA","Golang","Spring Boot","Dubbo","Kubernetes","Flask","PHP","Laveral","Rust","Mysql","Linux"]
+    "数据挖掘": [{"name":"全部","api":"*"},{"name":"线性回归","api":"li"},{"name":"决策树","api":"dt"}],
+    "神经网络": [{"name":"全部","api":"*"},{"name":"CNN","api":"cnn"},{"name":"RNN","api":"rnn"}]
   }
 }
