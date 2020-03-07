@@ -127,7 +127,10 @@ class Header extends Component {
             <div>
                 <HeaderWrapper>
                         <Link to="/">
-                            <Logo/>
+                            <div>
+                                <div>知识</div>
+                                <div>论坛</div>
+                            </div>
                         </Link>
                         <NavWrapper>
                             <Link to="/">

@@ -12,7 +12,6 @@ export const DetailWrapper = styled.div`
 `;
 
 export const StepBarWrapper =styled.div`
-  width:auto;
   min-height:100vh;
   overflow:auto;
   background-color:cyan;
@@ -31,6 +30,7 @@ export const ArticleWrapper = styled.div`
   padding-bottom: 100px;
   background-color:white;
   padding:15px;
+  padding-top:45px;
 `
 
 export const Header = styled.div`

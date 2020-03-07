@@ -8,7 +8,6 @@ import ArticleStepBar from "./components/stepbar";
 
 class Detail extends PureComponent {
   render() {
-    let input="# test \n [ ] 123 $$ A $$"
     return (
       <div>
         <DetailWrapper>

@@ -19,6 +19,23 @@ class ArticleStepBar extends Component{
         )
     }
 
+    getArticles(){
+        const articles=[
+            {domain:"数学",title:"线性代数"},
+            {domain:"编程",title:"Python 速成"},
+            {domain:"机器学习",title:"CNN 神经网络"}
+        ]
+
+        const steps=[]
+        articles.forEach( (element,idx) => {
+        steps.push(
+            <Step title={element.domain} description={element.title} key={idx} ></Step>
+        )
+        })
+
+        return steps
+    }
+
     Goback(){
         window.history.back()
     }
@@ -26,16 +43,13 @@ class ArticleStepBar extends Component{
         return (
         <div>
             <ButtonWrapper>
-            <div onClick={this.Goback}>GOBACK</div>
-            <button onClick={this.showStepBar.bind(this)}>SHOW</button>
+            <div onClick={this.Goback}>L</div>
+            <div onClick={this.showStepBar.bind(this)}>R</div>
+            <div>I</div>
             </ButtonWrapper>  
             <StepBarWrapper show={this.state.showStep}>
             <Steps progressDot current={1} direction="vertical">
-                <Step title="Finished" description="This is a description. This is a description." />
-                <Step title="Finished" description="This is a description. This is a description." />
-                <Step title="In Progress" description="This is a description. This is a description." />
-                <Step title="Waiting" description="This is a description." />
-                <Step title="Waiting" description="This is a description." />
+                {this.getArticles()}
             </Steps>
             </StepBarWrapper>
         </div>
