@@ -2,11 +2,35 @@ import axios from "axios";
 import * as constants from "./constants";
 import {toJS} from "immutable";
 
-const changeDetail = (title, content) => ({
+const changeDetail = (data) => ({
   type: constants.CHANGE_DETAIL,
-  title,
-  content
+  data:data
 });
+
+const switchToolBarAction = (data) =>({
+  type:constants.SHOW_TOOL_BAR,
+  data:data
+})
+
+const switchReadListAction = (data) =>({
+  type:constants.SHOW_READ_LIST,
+  data:data
+})
+
+const getReadListAction = (data) => ({
+  type:constants.GET_READ_LIST,
+  data:data
+})
+
+const resetStoreAction = () => ({
+  type:constants.RESET_STORE,
+})
+
+export const resetStore = () => {
+  return (dispatch) => {
+    dispatch(resetStoreAction())
+  }
+}
 
 export const getDetail = id => {
   return (dispatch,getState) => {
@@ -14,8 +38,7 @@ export const getDetail = id => {
     //if backend presendted, url+id is enough
     let urlFormatter=""
     const {topic,tag}=getState().toJS().home
-    console.log(tag)
-    if(tag.api==undefined || tag.api=="*"){
+    if(tag == undefined || tag.api==undefined || tag.api=="*"){
       urlFormatter=`dm-dt-${id}.md`
     }else{
       if(topic.api=="*"){
@@ -24,13 +47,78 @@ export const getDetail = id => {
         urlFormatter=`${topic.api}-${tag.api}-${id}.md`
       }
     }
-    console.log(urlFormatter)
     axios
       .get("/api/articles/"+urlFormatter)
       .then(res => {
         const result = res.data;
-        dispatch(changeDetail("SAMPLE", result));
+        let data={}
+        data.content=result
+        data.idx=0
+        dispatch(changeDetail(data));
       })
       .catch(() => {});
   };
 };
+
+export const getContent = (aid,idx,dispatch) => {
+    console.log("/api/articles/"+aid)
+    axios
+    .get("/api/articles/"+aid)
+    .then(res => {
+      let content = res.data
+      let data={}
+      data.content=content
+      data.idx=idx
+      dispatch(changeDetail(data))
+    })
+    .catch(err => {
+      console.log(err)
+    })
+}
+
+export const switchToolBar=(show)=>{
+  return (dispatch) =>{
+    let data={}
+    data.show=show
+    dispatch(switchToolBarAction(data))
+  }
+}
+
+export const switchReadList=()=>{
+  return (dispatch,getState) => {
+    let data={}
+    const {
+      showReadList
+    } = getState().toJS().detail
+    data.show=!showReadList
+    console.log(data)
+    dispatch(switchReadListAction(data))
+  }
+}
+
+export const getReadList = (lid) => {
+  return (dispatch) =>{
+    axios
+    .get("/api/readList.json")
+    .then(res => {
+      let readList=res.data.data.articles
+      let data={}
+      data.readList=readList
+      getContent(readList[0].aid,0,dispatch)
+      dispatch(getReadListAction(data))
+    })
+    .catch((err)=>{
+      console.log(err)
+    })
+  }
+}
+
+export const changeArticleIdx = (idx) => {
+  return (dispatch,getState) => {
+    const {
+      readList
+    } = getState().toJS().detail
+    let aid=readList[idx].aid
+    getContent(aid,idx,dispatch)
+  }
+}

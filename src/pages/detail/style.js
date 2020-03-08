@@ -1,7 +1,5 @@
 import styled from "styled-components";
 
-let toolBarHeight = 50;
-
 export const EmptyDiv = styled.div`
   visibility:hidden;
 `
@@ -12,25 +10,24 @@ export const DetailWrapper = styled.div`
 `;
 
 export const StepBarWrapper =styled.div`
+  display:${props=>props.show?"block":"none"};
   min-height:100vh;
   overflow:auto;
-  background-color:cyan;
-`
-
-export const FixedInStepBarWrapper =styled.div`
-  position: fixed;
-  width:inherit;
+  background-color:#f5f5f5;
+  border-right-style:solid;
+  border-color:black;
+  border-width:1px;
 `
 
 export const ArticleWrapper = styled.div`
-  width:100%;
+  flex:1;
   margin-left:auto;
   min-height:100vh;
   overflow:auto;
   padding-bottom: 100px;
   background-color:white;
   padding:15px;
-  padding-top:45px;
+  padding-top:15px;
 `
 
 export const Header = styled.div`

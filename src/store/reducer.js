@@ -15,6 +15,5 @@ export default reducer;
 
 export let testFn = function  (parm) {
   if(typeof parm === 'boolean'){
-    console.log(parm)
   }
 }

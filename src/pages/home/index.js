@@ -4,6 +4,7 @@ import List from "./components/List";
 import Recommend from "./components/Recommend";
 import Writer from "./components/Writer";
 import { actionCreators } from "./store";
+import {actionCreators as detailActionCreator } from "../detail/store"
 import {BackTop } from "./style";
 import {toJS} from "immutable";
 
@@ -58,6 +59,7 @@ class Home extends Component {
   componentDidMount() {
     this.props.changeHomeData();
     this.bindEvents();
+    this.props.showTopic();
   }
 
   componentWillUnmount() {
@@ -85,6 +87,9 @@ const mapDispatch = dispatch => ({
   },
   handleSetTag(idx){
     dispatch(actionCreators.setTag(idx))
+  },
+  showTopic(){
+    dispatch(detailActionCreator.switchToolBar(false))
   }
 });
 

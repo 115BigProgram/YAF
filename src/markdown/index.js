@@ -37,7 +37,6 @@ class MarkdownRenderer extends Component{
       }
     };
 
-    let md=markdown.parse(this.props.source);
     return (
       <MathJax.Context input="tex">
         <ReactMarkdown {...newProps} />

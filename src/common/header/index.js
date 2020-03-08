@@ -6,9 +6,10 @@ import {actionCreators} from "./store";
 import {actionCreators as loginActionCreators} from "../../pages/login/store";
 import {actionCreators as HomeContentCreator} from "../../pages/home/store"
 import {Typography} from "antd"
+import DetailPageToolBar from "../header/components/detailToolBar"
+
 import {
     HeaderWrapper,
-    Logo,
     NonHomeItemWrapper,
     NavItem,
     SearchWrapper,
@@ -20,7 +21,13 @@ import {
     SearchInfoItem,
     Addition,
     Button,
-    TopicItem, TopicWrapper, TagWrapper, TagItem, SearchWrapperOuter, NavWrapper, NavItemShowButton
+    TopicItem, 
+    TopicWrapper, 
+    NavWrapper, 
+    NavItemShowButton,
+    HeaderLineWrapper,
+    TopicLineWrapper,
+    LogoWrapper
 } from "./style";
 
 const {Text} = Typography
@@ -28,7 +35,10 @@ const {Text} = Typography
 class Header extends Component {
     constructor(props){
         super(props)
-        this.state={NavItemShow:false}
+        this.state={
+            NavItemShow:false,
+            ActiveNo:0,
+        }
     }
 
     componentDidMount() {
@@ -42,17 +52,34 @@ class Header extends Component {
         })
     }
 
+    onChangeTopic(idx){
+        const{
+            handleChangeTopic
+        } = this.props;
+
+        this.setState({
+            ActiveNo:idx
+        })
+
+        handleChangeTopic(idx)
+    }
+
     getTopics() {
         const {
             topics,
             handleChangeTopic
         } = this.props;
 
+        const {
+            ActiveNo
+        } = this.state;
+
+
         const newTopics = topics.toJS()
         const topicItems = []
         newTopics.map((item, idx) => {
             topicItems.push(
-                <TopicItem  onClick={()=>handleChangeTopic(idx)} key={idx}>
+                <TopicItem idx={idx} active={ActiveNo}  onClick={()=>this.onChangeTopic.bind(this)(idx)} key={idx}>
                     {item.name}
                 </TopicItem>
             )
@@ -121,15 +148,17 @@ class Header extends Component {
             list,
             login,
             logout,
+            showToolBar
         } = this.props;
         return (
             <div>
+                <HeaderLineWrapper>
                 <HeaderWrapper>
                         <Link to="/">
-                            <div>
+                            <LogoWrapper>
                                 <div>知识</div>
                                 <div>论坛</div>
-                            </div>
+                            </LogoWrapper>
                         </Link>
                         <NavWrapper>
                             <Link to="/">
@@ -174,9 +203,15 @@ class Header extends Component {
                             <Button className="reg">注册</Button>
                         </Addition>
                 </HeaderWrapper>
-                < TopicWrapper >
-                    { this.getTopics() }
-                </ TopicWrapper >
+                </HeaderLineWrapper>
+                <TopicLineWrapper>
+                    {
+                        showToolBar?<DetailPageToolBar/>:
+                        (< TopicWrapper >
+                            { this.getTopics() }
+                        </ TopicWrapper >)
+                    }
+                </TopicLineWrapper>
             </div>
         );
     }
@@ -191,7 +226,8 @@ const mapStateToProps = state => {
         mouseIn: state.getIn(["header", "mouseIn"]),
         login: state.getIn(["login", "login"]),
         topics: state.getIn(["home", "topics"]),
-        tags:state.getIn(["header","tags"])
+        tags:state.getIn(["header","tags"]),
+        showToolBar:state.getIn(["detail","showToolBar"])
     };
 };
 

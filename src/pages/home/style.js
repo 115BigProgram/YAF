@@ -148,13 +148,20 @@ export const TagWrapper = styled.div`
   align-items:center;
   margin-top: 1px;
   border-width: 10px;
-  background-color: chocolate;
   width:100%;
 `
 
 export const TagItem =styled.div`
+  font-size: 13px;
+  border: 1px solid #ddd;
+  color: #787878;
+  border-radius: 3px;
+
+  background-color:white;
+
   padding: 3px;
   margin-right: 15px;
+  margin-bottom:15px;
   text-align:center;
   cursor:pointer;
   

@@ -66,6 +66,7 @@ export const setTopic= (idx) => {
             topic:topic
           }
 
+
           dispatch(changeTags(data))
         })
         .catch((err)=>{

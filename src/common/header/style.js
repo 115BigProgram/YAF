@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import logoPic from "../../statics/logo.png";
 import { ContentHorizontalPadding,ContentLength,DesktopMiniWidth,TopNavBarHeight } from "../../constvars"
-import {Content} from "../../pages/detail/style";
 
 
 const toolBarHeight = TopNavBarHeight/3*2 ;
@@ -10,12 +9,16 @@ const topicBarHeight =toolBarHeight/2;
 const navFontSize = 17;
 const navDivMiniSize  = navFontSize*1.5;
 
+export const HeaderLineWrapper = styled.div`
+  position:relative;
+  width:100%;
+  border-bottom: 1px solid #f0f0f0;
+`
 
 export const HeaderWrapper = styled.div`
   z-index: 1;
   position: relative;
   height: ${toolBarHeight}px;
-  border-bottom: 1px solid #f0f0f0;
 
   @media (min-width: ${DesktopMiniWidth}px){
     margin-left:${ContentHorizontalPadding};
@@ -24,7 +27,6 @@ export const HeaderWrapper = styled.div`
   display: flex;
   flex-wrap: nowrap;
   align-items: center;
-
 `;
 
 export const Logo = styled.div`
@@ -82,13 +84,14 @@ export const NavItem = styled.div`
   white-space: nowrap;
   text-overflow: ellipsis;
   &.active {
-    color: #ea6f5a;
+    color: dodgerblue;
   }
 `;
 
-export const PhoneNavDownScrollPannel = styled.div`
+export const LogoWrapper = styled.div`
+  font-size:17px;
+  margin:0px 10px;
 `
-
 
 export const SearchWrapper = styled.div`
   position: relative;
@@ -207,7 +210,7 @@ export const Addition = styled.div`
 `;
 
 export const Button = styled.div`
-  border: 1px solid #ec6149;
+  border: 1px solid dodgerblue;
   min-width: 55px;
   padding:0px;
   margin-right:3px;
@@ -216,20 +219,23 @@ export const Button = styled.div`
   line-height: 30px;
   text-align:center;
   &.reg {
-    color: #ec6149;
+    color: dodgerblue;
   }
   &.writting {
     color: #fff;
-    background: #ec6149;
+    background: dodgerblue;
   }
 `;
+
+export const TopicLineWrapper =styled.div`
+  border-bottom: 1px solid #f0f0f0;
+  width:100%;
+`
 
 export const TopicWrapper = styled.div`
   display:flex;
   align-items:center;
-  background-color: aqua;
   border-width: 10px;
-  border-bottom: 1px solid #f0f0f0;
   height: ${TopNavBarHeight/3}px;
   @media (min-width: ${DesktopMiniWidth}px){
     width: ${ContentLength};
@@ -239,6 +245,7 @@ export const TopicWrapper = styled.div`
 `
 
 export const TopicItem = styled.div`
+  color:${props => props.active==props.idx ? "dodgerblue":"grey"};
   margin:1px;
   margin-left: 2px;
   margin-right: 5px;
