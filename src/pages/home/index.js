@@ -25,8 +25,8 @@ class Home extends Component {
     const tagsItem = []
     tags.toJS().map((tag, idx) => {
       tagsItem.push(
-          <TagItem  key={idx} onClick={()=>handleSetTag(idx)}>
-            {tag.name}
+          <TagItem  key={tag.id} onClick={()=>handleSetTag(idx)}>
+            {tag.topic}
           </TagItem>
       )
     })

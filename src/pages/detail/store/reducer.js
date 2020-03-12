@@ -11,9 +11,12 @@ const defaultState = fromJS({
 });
 
 const changeDetail = (state, action) => {
+  console.log('hit')
+  console.log(action)
   return state.merge({
     currentArticle: action.data.idx,
-    content: action.data.content
+    content: action.data.content.content,
+    title:action.data.content.title,
   });
 };
 

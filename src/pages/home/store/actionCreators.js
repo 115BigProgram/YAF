@@ -1,6 +1,7 @@
 import axios from "axios";
 import * as constants from "./constants";
 import { fromJS } from "immutable";
+import {client,handleResponse,handleErr} from "../../../client"
 
 
 const changHomeData = result => ({
@@ -30,17 +31,21 @@ const setTagAction =(data) => ({
 })
 
 export const getHomeInfo = () => {
-  return dispatch => {
-    axios.get("/api/home.json").then(res => {
-      const result = res.data.data;
+  return (dispatch,getState) => {
+    const {tag} = getState().toJS().home
+    client.get("/articleList?topic="+tag.idx+"&size=4&page=0").then(res => {
+      let result={}
+      result.articleList = handleResponse(res);
+      console.log(result)
       dispatch(changHomeData(result));
     });
   };
 };
 
 export const getMoreList = page => {
-  return dispatch => {
-    axios.get("/api/homeList.json?page=" + page).then(res => {
+  return (dispatch,getState) => {
+    const {tag} = getState().toJS().home
+    client.get(`/articleList?topic=${tag.idx}&size=4&page=${page}`).then(res => {
       const result = res.data.data;
       dispatch(addHomeList(result, page + 1));
     });
@@ -55,14 +60,16 @@ export const toggleTopShow = show => ({
 
 export const setTopic= (idx) => {
   return (dispatch,getState) => {
-    axios
-        .get("/api/tags.json")
+    
+   const {topics} = getState().toJS().home
+   const topic=topics[idx]
+   console.log(topic)
+   client 
+        .get("/topics?domain="+topic.id)
         .then(res => {
-          const topic_tags = res.data.data
-          const {topics} = getState().toJS().home
-          const topic=topics[idx]
+          let tags=handleResponse(res)
           let data={
-            tags:topic_tags[topic.name],
+            tags:tags,
             topic:topic
           }
 
@@ -86,10 +93,10 @@ export const setTag = (idx) => {
 
 export const getTopics = () => {
     return dispatch => {
-        axios
-            .get("/api/topics.json")
+       client 
+            .get("/domains")
             .then(res => {
-                const raw = res.data.data;
+                const raw = handleResponse(res)
                 let data={
                   topics:raw
                 }

@@ -15,6 +15,8 @@ class Detail extends PureComponent {
   }
 
   render() {
+    const {content}=this.props
+    console.log(content)
     return (
       <div>
         <DetailWrapper>
@@ -22,6 +24,7 @@ class Detail extends PureComponent {
           <ReadList/>
         </StepBarWrapper>
         <ArticleWrapper>
+          <Header>{this.props.title}</Header>
           <MarkdownRenderer source={this.props.content}></MarkdownRenderer>
         </ArticleWrapper>
       </DetailWrapper>
@@ -31,7 +34,7 @@ class Detail extends PureComponent {
 
   componentDidMount() {
     this.props.getDetail(this.props.match.params.id);
-    this.props.getReadList()
+    //this.props.getReadList()
     this.props.showToolBar()
   }
 }

@@ -9,7 +9,7 @@ const defaultState = fromJS({
   showScroll: false,
   tags:[],
   topics:[],
-  tag:Object,
+  tag:{idx:"all"},
   topic:Object
 });
 

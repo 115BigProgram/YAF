@@ -1,6 +1,7 @@
 import axios from "axios";
 import * as constants from "./constants";
 import {toJS} from "immutable";
+import {client,handleResponse,handleErr} from "../../../client"
 
 const changeDetail = (data) => ({
   type: constants.CHANGE_DETAIL,
@@ -36,23 +37,12 @@ export const getDetail = id => {
   return (dispatch,getState) => {
     //the logic here is just for demo 
     //if backend presendted, url+id is enough
-    let urlFormatter=""
-    const {topic,tag}=getState().toJS().home
-    if(tag == undefined || tag.api==undefined || tag.api=="*"){
-      urlFormatter=`dm-dt-${id}.md`
-    }else{
-      if(topic.api=="*"){
-        urlFormatter=`dm-${tag.api}-${id}.md`
-      }else{
-        urlFormatter=`${topic.api}-${tag.api}-${id}.md`
-      }
-    }
-    axios
-      .get("/api/articles/"+urlFormatter)
+   client 
+      .get("/article?aid="+id)
       .then(res => {
-        const result = res.data;
+        let content=handleResponse(res)
         let data={}
-        data.content=result
+        data.content=content
         data.idx=0
         dispatch(changeDetail(data));
       })
@@ -65,9 +55,10 @@ export const getContent = (aid,idx,dispatch) => {
     axios
     .get("/api/articles/"+aid)
     .then(res => {
-      let content = res.data
+      let result = handleResponse(res)
+      console.log(res.content)
       let data={}
-      data.content=content
+      data.content=result.content
       data.idx=idx
       dispatch(changeDetail(data))
     })

@@ -80,7 +80,7 @@ class Header extends Component {
         newTopics.map((item, idx) => {
             topicItems.push(
                 <TopicItem idx={idx} active={ActiveNo}  onClick={()=>this.onChangeTopic.bind(this)(idx)} key={idx}>
-                    {item.name}
+                    {item.domain}
                 </TopicItem>
             )
         })
