@@ -4,9 +4,9 @@ import { fromJS } from "immutable";
 import {client,handleResponse,handleErr} from "../../../client"
 
 
-const changHomeData = result => ({
-  type: constants.CHANGE_HOME_DATA,
-  articleList: result.articleList
+const setHomeListAction = data => ({
+  type: constants.SET_HOME_LIST,
+  data: data
 });
 
 const setTopics = data =>({
@@ -33,17 +33,54 @@ const setTagAction =(data) => ({
 export const getMoreList = page => {
   return (dispatch,getState) => {
     const {tag} = getState().toJS().home
-    client.get(`/articleList?topic=${tag.idx}&size=4&page=${page}`).then(res => {
-      const result = res.data.data;
+    console.log(tag)
+    client.get(`/articleList?topic=${tag.id}&size=4&page=${page}`).then(res => {
+      const result = handleResponse(res);
+      console.log(result)
       dispatch(addHomeList(result, page + 1));
+    })
+    .catch(err=>{
+      console.log(err)
     });
   };
 };
+
+export const setHomeList =()=>{
+  return (dispatch,getState) =>{
+    const {tag}=getState().toJS().home
+    client.get(`/articleList?topic=${tag.id}&size=4&page=${0}`)
+    .then(res => {
+      const result=handleResponse(res)
+      let data={}
+      data.list=result
+      dispatch(setHomeListAction(data))
+    })
+    .catch(err=>{
+      console.log(err)
+    })
+  }
+}
 
 export const toggleTopShow = show => ({
   type: constants.TOGGLE_SCROLL_TOP,
   show
 });
+
+const onChangeTag=(dispatch,tag)=>{
+  client.get(`/articleList?topic=${tag.id}&size=4&page=${0}`)
+  .then(res=>{
+      const result=handleResponse(res)
+      console.log(res)
+      let data={}
+      data.list=result
+      dispatch(setHomeListAction(data))
+
+  })
+  .catch(err=>{
+      console.log(err)
+  })
+
+}
 
 
 export const setTopic= (idx) => {
@@ -51,7 +88,6 @@ export const setTopic= (idx) => {
     
    const {topics} = getState().toJS().home
    const topic=topics[idx]
-   console.log(topic)
    client 
         .get("/topics?domain="+topic.id)
         .then(res => {
@@ -60,14 +96,13 @@ export const setTopic= (idx) => {
             tags:tags,
             topic:topic
           }
-
-
           dispatch(changeTags(data))
+          onChangeTag(dispatch,tags[0])
         })
         .catch((err)=>{
           let tags=[]
           if (idx!=0){
-            tags=[{id:"all",topic:"敬请期待"}]
+            tags=[{id:"all",topic:"敬请期待!请浏览其他文章."}]
           }
 
           let data={
@@ -75,6 +110,7 @@ export const setTopic= (idx) => {
             tags:tags
           }
           dispatch(changeTags(data))
+          onChangeTag(dispatch,{id:"all"})
           console.log(err)
         })
   }
@@ -86,6 +122,7 @@ export const setTag = (idx) => {
     let data={}
     data.tag=tags[idx]
     dispatch(setTagAction(data))
+    onChangeTag(dispatch,tags[idx])
   }
 }
 

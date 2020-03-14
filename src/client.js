@@ -7,7 +7,8 @@ export const client=axios.create({
 })
 
 export function handleResponse(res){
-    if (res.data.code!=0){
+    if (res.data.code!=0 || res.data.msg!=null){
+        console.log(res)
         throw res.data
     }
     return res.data.data

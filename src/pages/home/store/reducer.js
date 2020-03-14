@@ -9,7 +9,7 @@ const defaultState = fromJS({
   showScroll: false,
   tags:[],
   topics:[],
-  tag:{idx:"all"},
+  tag:{id:"all"},
   topic:Object
 });
 
@@ -29,7 +29,7 @@ const addArticleList = (state, action) => {
 const changeTopic = (state,action) =>{
   let tag={}
   if (action.data.tags.length==0){
-    tag=undefined
+    tag={id:"all"}
   }else{
     tag=action.data.tags[0]
   }
@@ -53,6 +53,13 @@ const setTopics = (state,action) => {
   })
 }
 
+const setHomeList =(state, action) => {
+  return state.merge({
+    articleList: action.data.list,
+    articlePage: 1
+  });
+};
+
 export default (state = defaultState, action) => {
   switch (action.type) {
     case constants.CHANGE_HOME_DATA:
@@ -67,6 +74,8 @@ export default (state = defaultState, action) => {
       return setTopics(state,action)
     case constants.SET_TAG:
       return state.set("tag",fromJS(action.data.tag))
+    case constants.SET_HOME_LIST:
+      return setHomeList(state,action)
     default:
       return state;
   }

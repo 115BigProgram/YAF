@@ -4,3 +4,4 @@ export const TOGGLE_SCROLL_TOP = "home/TOGGLE_SCROLL_TOP";
 export const CHANGE_TAGS = "home/CHANGE_TAGS";
 export const CHANGE_TOPICS = "home/CHANGE_TOPIC";
 export const SET_TAG="home/SET_TAG"
+export const SET_HOME_LIST="home/SET_LIST"

@@ -78,7 +78,7 @@ const mapState = state => ({
 
 const mapDispatch = dispatch => ({
   changeHomeData() {
-    dispatch(actionCreators.getMoreList(0));
+    dispatch(actionCreators.setHomeList());
   },
   changeScrollTopShow() {
     dispatch(
