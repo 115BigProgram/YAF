@@ -9,8 +9,9 @@ const defaultState = fromJS({
   showScroll: false,
   tags:[],
   topics:[],
-  tag:{id:"all"},
-  topic:Object
+  tag:{id:null,name:"全部"},
+  topic:{id:null,name:"全部"},
+  keyword:""
 });
 
 const changeHomeData = (state, action) => {
@@ -29,7 +30,7 @@ const addArticleList = (state, action) => {
 const changeTopic = (state,action) =>{
   let tag={}
   if (action.data.tags.length==0){
-    tag={id:"all"}
+    tag={id:null}
   }else{
     tag=action.data.tags[0]
   }
@@ -76,6 +77,8 @@ export default (state = defaultState, action) => {
       return state.set("tag",fromJS(action.data.tag))
     case constants.SET_HOME_LIST:
       return setHomeList(state,action)
+    case constants.CHANGE_KEY_WORD:
+      return state.set("keyword",action.data.keyword)
     default:
       return state;
   }

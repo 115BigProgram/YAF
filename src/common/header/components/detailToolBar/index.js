@@ -2,14 +2,9 @@ import React,{Component} from "react"
 import { ToolBarWrapper, Button } from "./style"
 import {actionCreators} from "../../../../pages/detail/store"
 import { connect } from "react-redux";
-import { SHOW_READ_LIST } from "../../../../pages/detail/store/constants";
 
 class DetailPageToolBar extends Component{
     goBack(){
-        const {
-            showTopic
-        } = this.props
-
         window.history.back()
     }
     render(){

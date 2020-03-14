@@ -3,6 +3,10 @@ import * as constants from "./constants";
 import { fromJS } from "immutable";
 import {client,handleResponse,handleErr} from "../../../client"
 
+const changeKeyWordAction = data =>({
+  type: constants.CHANGE_KEY_WORD,
+  data: data
+})
 
 const setHomeListAction = data => ({
   type: constants.SET_HOME_LIST,
@@ -30,14 +34,36 @@ const setTagAction =(data) => ({
   data:data,
 })
 
+function generateArticleListQueryApi(params){
+  let kw=params.kw===undefined?"":params.kw
+  let domainID=params.domainID===undefined?null:params.domainID
+  let topicID=params.topicID===undefined?null:params.topicID
+  let page=params.page===undefined?0:params.page
+
+  let endpoint=`/articleList?size=4&page=${page}&${kw==""?"kw":"kw="+kw}`
+  if(domainID==null && topicID==null){
+    return endpoint
+  }
+  if(domainID!=null){
+    return endpoint+`&domainID=${domainID}`
+  }
+  return endpoint+`&topicID=${topicID}`
+}
+
 export const getMoreList = page => {
   return (dispatch,getState) => {
-    const {tag} = getState().toJS().home
-    console.log(tag)
-    client.get(`/articleList?topic=${tag.id}&size=4&page=${page}`).then(res => {
+    const {tag,topic,keyword} = getState().toJS().home
+    let api=""
+    if(tag===undefined || tag.id==null){
+      api=generateArticleListQueryApi({page:page,domainID:topic.id,kw:keyword})
+    }else{
+      api=generateArticleListQueryApi({page:page,topicID:tag.id,kw:keyword})
+    }
+    console.log(api)
+    client.get(api).then(res => {
       const result = handleResponse(res);
       console.log(result)
-      dispatch(addHomeList(result, page + 1));
+      dispatch(addHomeList(result.articles, page + 1));
     })
     .catch(err=>{
       console.log(err)
@@ -47,12 +73,13 @@ export const getMoreList = page => {
 
 export const setHomeList =()=>{
   return (dispatch,getState) =>{
-    const {tag}=getState().toJS().home
-    client.get(`/articleList?topic=${tag.id}&size=4&page=${0}`)
+    const {tag,topic,keyword}=getState().toJS().home
+    let api=generateArticleListQueryApi({domainID:topic.id,topicID:tag.id,kw:keyword})
+    client.get(api)
     .then(res => {
       const result=handleResponse(res)
       let data={}
-      data.list=result
+      data.list=result.articles
       dispatch(setHomeListAction(data))
     })
     .catch(err=>{
@@ -66,13 +93,19 @@ export const toggleTopShow = show => ({
   show
 });
 
-const onChangeTag=(dispatch,tag)=>{
-  client.get(`/articleList?topic=${tag.id}&size=4&page=${0}`)
+const onChangeTag=(dispatch,topic,tag,keyword)=>{
+  if(tag==undefined){
+    tag={id:null}
+  }
+  console.log(topic)
+  let api=generateArticleListQueryApi({domainID:topic.id,topicID:tag.id,kw:keyword})
+  console.log(api)
+  client.get(api)
   .then(res=>{
       const result=handleResponse(res)
       console.log(res)
       let data={}
-      data.list=result
+      data.list=result.articles
       dispatch(setHomeListAction(data))
 
   })
@@ -86,23 +119,25 @@ const onChangeTag=(dispatch,tag)=>{
 export const setTopic= (idx) => {
   return (dispatch,getState) => {
     
-   const {topics} = getState().toJS().home
+   const {topics,keyword} = getState().toJS().home
+   console.log(keyword)
    const topic=topics[idx]
    client 
         .get("/topics?domain="+topic.id)
         .then(res => {
           let tags=handleResponse(res)
+          tags.unshift({id:null,topic:"全部"})
           let data={
             tags:tags,
             topic:topic
           }
           dispatch(changeTags(data))
-          onChangeTag(dispatch,tags[0])
+          onChangeTag(dispatch,topic,tags[0],keyword)
         })
         .catch((err)=>{
           let tags=[]
           if (idx!=0){
-            tags=[{id:"all",topic:"敬请期待!请浏览其他文章."}]
+            tags=[]
           }
 
           let data={
@@ -110,7 +145,7 @@ export const setTopic= (idx) => {
             tags:tags
           }
           dispatch(changeTags(data))
-          onChangeTag(dispatch,{id:"all"})
+          onChangeTag(dispatch,topic,{id:null},keyword)
           console.log(err)
         })
   }
@@ -118,11 +153,16 @@ export const setTopic= (idx) => {
 
 export const setTag = (idx) => {
   return (dispatch,getState) => {
-    const {tags} = getState().toJS().home
+    const {tags,keyword,topic} = getState().toJS().home
+    console.log(keyword)
     let data={}
     data.tag=tags[idx]
     dispatch(setTagAction(data))
-    onChangeTag(dispatch,tags[idx])
+    if(tags[idx].id==null){
+      onChangeTag(dispatch,topic,tags[idx],keyword)
+    }else{
+      onChangeTag(dispatch,{id:null},tags[idx],keyword)
+    }
   }
 }
 
@@ -142,4 +182,25 @@ export const getTopics = () => {
                 console.log(err)
             })
     }
+}
+
+export const changeKeyword=(keyword)=>{
+  return (dispatch,getState) =>{
+    console.log('hit')
+    console.log(keyword)
+    dispatch(changeKeyWordAction({keyword}))
+    const {tag,topic}=getState().toJS().home
+    let api=generateArticleListQueryApi({domainID:topic.id,topicID:tag.id,kw:keyword})
+    console.log(api)
+    client.get(api)
+    .then(res => {
+      const result=handleResponse(res)
+      let data={}
+      data.list=result.articles
+      dispatch(setHomeListAction(data))
+    })
+    .catch(err=>{
+      console.log(err)
+    })
+  }
 }

@@ -23,7 +23,7 @@ export const NavBarWrapper =styled.div`
   display:${props=>props.show?"block":"none"};
   min-height:100vh;
   overflow:auto;
-  background-color:cyan;
+  background-color:white;
   border-left-style:solid;
   border-color:black;
   border-width:1px;

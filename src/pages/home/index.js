@@ -6,7 +6,6 @@ import Writer from "./components/Writer";
 import { actionCreators } from "./store";
 import {actionCreators as detailActionCreator } from "../detail/store"
 import {BackTop } from "./style";
-import {toJS} from "immutable";
 
 import { HomeWrapper, HomeLeft, HomeRight,TagWrapper,TagItem } from "./style";
 

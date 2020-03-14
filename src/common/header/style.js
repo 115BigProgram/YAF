@@ -97,6 +97,7 @@ export const SearchWrapper = styled.div`
   position: relative;
   z-index: 3;
   top:0;
+  cursor: pointer;
   .zoom {
     position: absolute;
     right: 5px;
@@ -115,14 +116,15 @@ export const SearchWrapper = styled.div`
 export const NavSearch = styled.input.attrs({
     placeholder: "搜索"
 })`
-  width: 160px;
   padding: 0 30px 0 20px;
   height: 38px;
-  @media (min-width:${DesktopMiniWidth}) {
+  @media (min-width:${DesktopMiniWidth}px) {
     margin-left: 20px;
+    width: 200px;
   }
 
-  @media (max-width:${DesktopMiniWidth}) {
+  @media (max-width:${DesktopMiniWidth}px) {
+    width: 160;
     margin: 0px;
     margin-left:2px;
     padding: 0px;

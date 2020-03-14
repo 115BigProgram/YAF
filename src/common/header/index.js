@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import {connect} from "react-redux";
 import {Link} from "react-router-dom";
 import {CSSTransition} from "react-transition-group";
+import NavSearch from "../header/components/searchBar"
 import {actionCreators} from "./store";
 import {actionCreators as loginActionCreators} from "../../pages/login/store";
 import {actionCreators as HomeContentCreator} from "../../pages/home/store"
@@ -13,7 +14,6 @@ import {
     NonHomeItemWrapper,
     NavItem,
     SearchWrapper,
-    NavSearch,
     SearchInfo,
     SearchInfoTitle,
     SearchInfoSwitch,
@@ -88,57 +88,6 @@ class Header extends Component {
         return topicItems
     }
 
-    getListArea() {
-        const {
-            focused,
-            list,
-            page,
-            totalPage,
-            mouseIn,
-            handleMouseEnter,
-            handleMouseLeave,
-            handleChangePage
-        } = this.props;
-        const newList = list.toJS();
-        const pageList = [];
-
-        if (newList.length) {
-            for (let i = (page - 1) * 10; i < page * 10; i++) {
-                pageList.push(
-                    <SearchInfoItem key={newList[i]}>{newList[i]}</SearchInfoItem>
-                );
-            }
-        }
-
-        if (focused || mouseIn) {
-            return (
-                <SearchInfo
-                    onMouseEnter={handleMouseEnter}
-                    onMouseLeave={handleMouseLeave}
-                >
-                    <SearchInfoTitle>
-                        热门搜索
-                        <SearchInfoSwitch
-                            onClick={() => handleChangePage(page, totalPage, this.spinIcon)}
-                        >
-                            <i
-                                ref={icon => {
-                                    this.spinIcon = icon;
-                                }}
-                                className="iconfont spin"
-                            >
-                                &#xe851;
-                            </i>
-                            换一批
-                        </SearchInfoSwitch>
-                    </SearchInfoTitle>
-                    <SearchInfoList>{pageList}</SearchInfoList>
-                </SearchInfo>
-            );
-        } else {
-            return null;
-        }
-    }
 
     render() {
         const {
@@ -175,19 +124,7 @@ class Header extends Component {
                               </NavItem>
                             </NonHomeItemWrapper>
                             </NavWrapper>
-                        <SearchWrapper>
-                            <CSSTransition in={focused} timeout={200} classNames="slide">
-                                <NavSearch
-                                    className={focused ? "focused" : ""}
-                                    onFocus={() => handleInputFocus(list)}
-                                    onBlur={handleInputBlur}
-                                />
-                            </CSSTransition>
-                            <i className={focused ? "focused iconfont zoom" : "iconfont zoom"}>
-                                &#xe614;
-                            </i>
-                            {this.getListArea()}
-                        </SearchWrapper>
+                        <NavSearch/>
                         <Addition>
                             {login ? (
                                 <Button className="writting" onClick={logout}>
