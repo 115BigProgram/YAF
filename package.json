@@ -8,6 +8,7 @@
     "antd": "^3.26.8",
     "axios": "^0.18.0",
     "immutable": "^3.8.2",
+    "markdown-navbar": "^1.4.0",
     "marked": "^0.8.0",
     "react": "^16.4.0",
     "react-dom": "^16.4.0",

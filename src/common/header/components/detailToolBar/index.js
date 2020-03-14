@@ -15,7 +15,8 @@ class DetailPageToolBar extends Component{
     render(){
         const{ 
             showReadList,
-            srl
+            srl,
+            showArticleIndex
         } = this.props
 
         console.log(srl)
@@ -25,7 +26,7 @@ class DetailPageToolBar extends Component{
                 <ToolBarWrapper>
                     <Button onClick={this.goBack.bind(this)}>返回</Button>
                     <Button onClick={()=>showReadList()} >阅读目录</Button>
-                    <Button>文章索引</Button>
+                    <Button onClick={()=>showArticleIndex()}>文章索引</Button>
                 </ToolBarWrapper>
             </div>
         )
@@ -42,6 +43,9 @@ const mapDispatch = dispatch => ({
   },
   showReadList(){
       dispatch(actionCreators.switchReadList())
+  },
+  showArticleIndex(){
+      dispatch(actionCreators.switchArticleIndex())
   }
 });
 

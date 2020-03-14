@@ -5,6 +5,7 @@ const defaultState = fromJS({
   title: "",
   content: "",
   showToolBar: false,
+  showArticleIndex:false,
   readList:fromJS([]),
   showReadList: false,
   currentArticle: 0,
@@ -35,6 +36,8 @@ export default (state = defaultState, action) => {
       return state.set("showToolBar",action.data.show)
     case constants.SHOW_READ_LIST:
       return state.set("showReadList",action.data.show)
+    case constants.SHOW_ARTICLE_IDX:
+      return state.set("showArticleIndex",action.data.show)
     case constants.GET_READ_LIST:
       return state.merge({
         readList:fromJS(action.data.readList),

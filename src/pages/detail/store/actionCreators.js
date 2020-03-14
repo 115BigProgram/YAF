@@ -13,6 +13,11 @@ const switchToolBarAction = (data) =>({
   data:data
 })
 
+const switchArticleIndexAction = (data) =>({
+  type:constants.SHOW_ARTICLE_IDX,
+  data:data
+})
+
 const switchReadListAction = (data) =>({
   type:constants.SHOW_READ_LIST,
   data:data
@@ -84,6 +89,17 @@ export const switchReadList=()=>{
     data.show=!showReadList
     console.log(data)
     dispatch(switchReadListAction(data))
+  }
+}
+
+export const switchArticleIndex=()=>{
+  return (dispatch,getState) => {
+    let data={}
+    const {
+      showArticleIndex 
+    } = getState().toJS().detail
+    data.show=!showArticleIndex
+    dispatch(switchArticleIndexAction(data))
   }
 }
 

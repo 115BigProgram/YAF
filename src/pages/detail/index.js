@@ -1,10 +1,11 @@
 import React, { PureComponent } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { DetailWrapper, Header, Content, ArticleWrapper, StepBarWrapper,  FixedInStepBarWrapper } from "./style";
+import { DetailWrapper, Header, Content, ArticleWrapper, StepBarWrapper,  FixedInStepBarWrapper, NavBarWrapper } from "./style";
 import MarkdownRenderer from "../../markdown/index"
 import { actionCreators } from "./store";
 import ReadList from "./components/stepbar";
+import MdNavBar from "./components/navbar"
 
 class Detail extends PureComponent {
   componentWillUnmount() {
@@ -26,6 +27,9 @@ class Detail extends PureComponent {
           <Header>{this.props.title}</Header>
           <MarkdownRenderer source={this.props.content}></MarkdownRenderer>
         </ArticleWrapper>
+        <NavBarWrapper show={this.props.showArticleIndex}>
+          <MdNavBar source={content}/>
+        </NavBarWrapper>
       </DetailWrapper>
       </div>
     );
@@ -42,6 +46,7 @@ const mapState = state => ({
   title: state.getIn(["detail", "title"]),
   content: state.getIn(["detail", "content"]),
   showReadList: state.getIn(["detail","showReadList"]),
+  showArticleIndex: state.getIn(["detail","showArticleIndex"]),
   readList: state.getIn(["detail","readList"])
 });
 

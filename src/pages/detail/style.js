@@ -19,6 +19,16 @@ export const StepBarWrapper =styled.div`
   border-width:1px;
 `
 
+export const NavBarWrapper =styled.div`
+  display:${props=>props.show?"block":"none"};
+  min-height:100vh;
+  overflow:auto;
+  background-color:cyan;
+  border-left-style:solid;
+  border-color:black;
+  border-width:1px;
+`
+
 export const ArticleWrapper = styled.div`
   flex:1;
   margin-left:auto;
