@@ -30,18 +30,6 @@ const setTagAction =(data) => ({
   data:data,
 })
 
-export const getHomeInfo = () => {
-  return (dispatch,getState) => {
-    const {tag} = getState().toJS().home
-    client.get("/articleList?topic="+tag.idx+"&size=4&page=0").then(res => {
-      let result={}
-      result.articleList = handleResponse(res);
-      console.log(result)
-      dispatch(changHomeData(result));
-    });
-  };
-};
-
 export const getMoreList = page => {
   return (dispatch,getState) => {
     const {tag} = getState().toJS().home
@@ -77,6 +65,16 @@ export const setTopic= (idx) => {
           dispatch(changeTags(data))
         })
         .catch((err)=>{
+          let tags=[]
+          if (idx!=0){
+            tags=[{id:"all",topic:"敬请期待"}]
+          }
+
+          let data={
+            topic:topic,
+            tags:tags
+          }
+          dispatch(changeTags(data))
           console.log(err)
         })
   }
@@ -97,8 +95,9 @@ export const getTopics = () => {
             .get("/domains")
             .then(res => {
                 const raw = handleResponse(res)
+                let topics=[{domain:"全部"}].concat(raw)
                 let data={
-                  topics:raw
+                  topics:topics
                 }
                 dispatch(setTopics(data))
             })
