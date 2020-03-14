@@ -94,6 +94,8 @@ export const ListInfo = styled.div`
     line-height: 24px;
     font-size: 13px;
     color: #999;
+    text-overflow:ellipsis;
+    height:50px;
   }
 `;
 

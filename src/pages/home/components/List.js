@@ -15,7 +15,7 @@ class List extends PureComponent {
               <ListItem>
                 <ListInfo>
                   <h3 className="title">{item.get("title")}</h3>
-                  <p className="desc">{item.get("content")}</p>
+                  <div className="desc">{item.get("content")}</div>
                 </ListInfo>
               </ListItem>
             </Link>
