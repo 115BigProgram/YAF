@@ -61,7 +61,7 @@ export const ContentContainer =styled.div`
 
 export const TopNavBarContainer = styled.div`
   position:fixed;
-  z-index:255;
+  z-index:200;
   top: 0;
   width:100%;
   background-color: white; 

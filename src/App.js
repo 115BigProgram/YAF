@@ -4,6 +4,7 @@ import { BrowserRouter, Route } from "react-router-dom";
 import Header from "./common/header";
 import Home from "./pages/home";
 import Detail from "./pages/detail/loadable.js";
+import LoginPopup from "./common/loginpopup"
 import Login from "./pages/login";
 import Write from "./pages/write";
 import store from "./store";
@@ -12,9 +13,9 @@ import {ContentContainer, MainContainer, TopNavBarContainer} from "./style";
 import MarkdownRenderer from "./markdown";
 class App extends Component {
   render() {
-    let input = "let "
     return (
       <Provider store={store}>
+        <div>
         <BrowserRouter>
           <div>
             <TopNavBarContainer>
@@ -23,6 +24,7 @@ class App extends Component {
             <div>
               <MainContainer>
                 <ContentContainer>
+                  <LoginPopup/>
                   <Route path="/" exact component={Home} />
                   <Route path="/login" exact component={Login} />
                   <Route path="/write" exact component={Write} />
@@ -32,6 +34,7 @@ class App extends Component {
             </div>
           </div>
         </BrowserRouter>
+        </div>
       </Provider>
     );
   }

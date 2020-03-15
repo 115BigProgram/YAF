@@ -91,13 +91,10 @@ class Header extends Component {
 
     render() {
         const {
-            focused,
-            handleInputFocus,
-            handleInputBlur,
-            list,
             login,
             logout,
-            showToolBar
+            showToolBar,
+            handleShowLogin
         } = this.props;
         return (
             <div>
@@ -131,11 +128,9 @@ class Header extends Component {
                                     退出
                                 </Button>
                             ):(
-                            <Link to="/login">
-                                <Button className="writting">
+                                <Button className="writting" onClick={handleShowLogin}>
                                     登陆
                                 </Button>
-                            </Link>
                             )}
                             <Button className="reg">注册</Button>
                         </Addition>
@@ -206,6 +201,9 @@ const mapDispathToProps = dispatch => {
         },
         handleChangeTopic(idx){
             dispatch(HomeContentCreator.setTopic(idx))
+        },
+        handleShowLogin(){
+            dispatch(loginActionCreators.showPopup(true))
         }
     };
 };
