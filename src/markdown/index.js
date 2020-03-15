@@ -25,7 +25,7 @@ class MarkdownRenderer extends Component{
       renderers: {
         ...props.renderers,
         code: Codeblock,
-        mutemath: (p) =>{
+        math: (p) =>{
           return(
             <MathJax.Node inline >{p.value}</MathJax.Node>
           )
