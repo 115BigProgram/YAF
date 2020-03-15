@@ -26,6 +26,7 @@ export const PopupToolBar = styled.div`
 `
 
 export const LoginBoxWrapper = styled.div`
+  display:${(props)=>props.show?"block":"none"};
   width: 318px;
   font-size: 1.167rem;
   padding:2rem;
@@ -48,6 +49,7 @@ export const LoginBoxWrapper = styled.div`
   .register{
       font-size:0.6rem;
   }
+
   .toolbar{
       display:flex;
       align-items:center;
@@ -55,4 +57,33 @@ export const LoginBoxWrapper = styled.div`
 `
 
 export const RegisterBoxWrapper = styled.div`
+  display:${(props)=>props.show?"block":"none"};
+
+  width: 318px;
+  font-size: 1.167rem;
+  padding:2rem;
+  background-color:white;
+  padding-top:0;
+
+  .title{
+      margin-bottom:30px;
+  }
+
+  .inputbox{
+      margin-top:10px;
+  }
+
+  .submit{
+      margin-top:30px;
+      width:100%
+  }
+
+  .toolbar{
+      display:flex;
+      align-items:center;
+  }
+
+  .login{
+      font-size:0.6rem;
+  }
 `

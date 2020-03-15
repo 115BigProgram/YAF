@@ -12,14 +12,14 @@ export const logout = () => ({
   value: false
 });
 
-export const showPopupActoin = (data) =>({
-  type:constants.SHOW_POPUP,
+export const showPopupActoin = (data) => ({
+  type: constants.SHOW_POPUP,
   data: data
 })
 
 export const changePageAction = (data) => ({
-  type:constants.CHANGE_POPUP_PAGE,
-  data:data
+  type: constants.CHANGE_POPUP_PAGE,
+  data: data
 })
 
 
@@ -30,7 +30,11 @@ export const login = (accout, password) => {
       .get("/api/login.json?account=" + accout + "&password=" + password)
       .then(res => {
         const result = res.data.data;
+        console.log(result)
         if (result) {
+          let data = {}
+          data.showPopup = false
+          dispatch(showPopupActoin(data))
           dispatch(changeLogin());
         } else {
           alert("登陆失败");
@@ -39,29 +43,36 @@ export const login = (accout, password) => {
   };
 };
 
-export const showPopup=(isLoginPage) =>{
+export const register = (username, email, password) => {
   return dispatch => {
-    let data={}
-    data.showPopup=true
-    data.isLoginPage=isLoginPage
+    let data = {}
+    data.showPopup = false
+    dispatch(showPopupActoin(data))
+  }
+}
+
+export const showPopup = (isLoginPage) => {
+  return dispatch => {
+    let data = {}
+    data.showPopup = true
+    data.isLoginPage = isLoginPage
 
     dispatch(showPopupActoin(data))
   }
 }
 
-export const closePopup=()=>{
+export const closePopup = () => {
   return dispatch => {
-    let data={}
-    data.showPopup=false
-    
+    let data = {}
+    data.showPopup = false
     dispatch(showPopupActoin(data))
   }
 }
 
-export const changePage=(isLoginPage)=>{
-  return dispatch=>{
-    let data={}
-    data.isLoginPage=isLoginPage
+export const changePage = (isLoginPage) => {
+  return dispatch => {
+    let data = {}
+    data.isLoginPage = isLoginPage
     dispatch(changePageAction(data))
   }
 }

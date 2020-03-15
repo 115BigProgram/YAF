@@ -1,12 +1,10 @@
-import React, {Component} from "react";
-import {connect} from "react-redux";
-import {Link} from "react-router-dom";
-import {CSSTransition} from "react-transition-group";
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import NavSearch from "../header/components/searchBar"
-import {actionCreators} from "./store";
-import {actionCreators as loginActionCreators} from "../../pages/login/store";
-import {actionCreators as HomeContentCreator} from "../../pages/home/store"
-import {Typography} from "antd"
+import { actionCreators } from "./store";
+import { actionCreators as loginActionCreators } from "../../pages/login/store";
+import { actionCreators as HomeContentCreator } from "../../pages/home/store"
 import DetailPageToolBar from "../header/components/detailToolBar"
 
 import {
@@ -21,23 +19,21 @@ import {
     SearchInfoItem,
     Addition,
     Button,
-    TopicItem, 
-    TopicWrapper, 
-    NavWrapper, 
+    TopicItem,
+    TopicWrapper,
+    NavWrapper,
     NavItemShowButton,
     HeaderLineWrapper,
     TopicLineWrapper,
     LogoWrapper
 } from "./style";
 
-const {Text} = Typography
-
 class Header extends Component {
-    constructor(props){
+    constructor(props) {
         super(props)
-        this.state={
-            NavItemShow:false,
-            ActiveNo:0,
+        this.state = {
+            NavItemShow: false,
+            ActiveNo: 0,
         }
     }
 
@@ -45,20 +41,20 @@ class Header extends Component {
         this.props.handleGetTopic()
     }
 
-    showItem(){
-        let preValue=this.state.NavItemShow
+    showItem() {
+        let preValue = this.state.NavItemShow
         this.setState({
-            NavItemShow:!preValue
+            NavItemShow: !preValue
         })
     }
 
-    onChangeTopic(idx){
-        const{
+    onChangeTopic(idx) {
+        const {
             handleChangeTopic
         } = this.props;
 
         this.setState({
-            ActiveNo:idx
+            ActiveNo: idx
         })
 
         handleChangeTopic(idx)
@@ -79,7 +75,7 @@ class Header extends Component {
         const topicItems = []
         newTopics.map((item, idx) => {
             topicItems.push(
-                <TopicItem idx={idx} active={ActiveNo}  onClick={()=>this.onChangeTopic.bind(this)(idx)} key={idx}>
+                <TopicItem idx={idx} active={ActiveNo} onClick={() => this.onChangeTopic.bind(this)(idx)} key={idx}>
                     {item.domain}
                 </TopicItem>
             )
@@ -94,12 +90,13 @@ class Header extends Component {
             login,
             logout,
             showToolBar,
-            handleShowLogin
+            handleShowLogin,
+            handleShowRegister
         } = this.props;
         return (
             <div>
                 <HeaderLineWrapper>
-                <HeaderWrapper>
+                    <HeaderWrapper>
                         <Link to="/">
                             <LogoWrapper>
                                 <div>知识</div>
@@ -112,36 +109,36 @@ class Header extends Component {
                             </Link>
                             <NavItemShowButton className="arrow" onClick={this.showItem.bind(this)}></NavItemShowButton>
                             <NonHomeItemWrapper show={this.state.NavItemShow}>
-                              <NavItem className="left">下载App</NavItem>
-                              <NavItem className="right">
-                                  <i className="iconfont">&#xe636;</i>
-                              </NavItem>
-                              <NavItem>
-                                  TEST
+                                <NavItem className="left">下载App</NavItem>
+                                <NavItem className="right">
+                                    <i className="iconfont">&#xe636;</i>
+                                </NavItem>
+                                <NavItem>
+                                    TEST
                               </NavItem>
                             </NonHomeItemWrapper>
-                            </NavWrapper>
-                        <NavSearch/>
+                        </NavWrapper>
+                        <NavSearch />
                         <Addition>
                             {login ? (
                                 <Button className="writting" onClick={logout}>
                                     退出
                                 </Button>
-                            ):(
-                                <Button className="writting" onClick={handleShowLogin}>
-                                    登陆
-                                </Button>
-                            )}
-                            <Button className="reg">注册</Button>
+                            ) : (
+                                    <Button className="writting" onClick={handleShowLogin}>
+                                        登陆
+                                    </Button>
+                                )}
+                            <Button className="reg" onClick={handleShowRegister}>注册</Button>
                         </Addition>
-                </HeaderWrapper>
+                    </HeaderWrapper>
                 </HeaderLineWrapper>
                 <TopicLineWrapper>
                     {
-                        showToolBar?<DetailPageToolBar/>:
-                        (< TopicWrapper >
-                            { this.getTopics() }
-                        </ TopicWrapper >)
+                        showToolBar ? <DetailPageToolBar /> :
+                            (< TopicWrapper >
+                                {this.getTopics()}
+                            </ TopicWrapper >)
                     }
                 </TopicLineWrapper>
             </div>
@@ -158,8 +155,8 @@ const mapStateToProps = state => {
         mouseIn: state.getIn(["header", "mouseIn"]),
         login: state.getIn(["login", "login"]),
         topics: state.getIn(["home", "topics"]),
-        tags:state.getIn(["header","tags"]),
-        showToolBar:state.getIn(["detail","showToolBar"])
+        tags: state.getIn(["header", "tags"]),
+        showToolBar: state.getIn(["detail", "showToolBar"])
     };
 };
 
@@ -199,11 +196,14 @@ const mapDispathToProps = dispatch => {
         logout() {
             dispatch(loginActionCreators.logout());
         },
-        handleChangeTopic(idx){
+        handleChangeTopic(idx) {
             dispatch(HomeContentCreator.setTopic(idx))
         },
-        handleShowLogin(){
+        handleShowLogin() {
             dispatch(loginActionCreators.showPopup(true))
+        },
+        handleShowRegister(){
+            dispatch(loginActionCreators.showPopup(false))
         }
     };
 };
