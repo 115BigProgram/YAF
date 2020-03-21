@@ -1,13 +1,16 @@
 import * as constants from "./constants";
 import {fromJS} from "immutable";
 
+
+
 const defaultState = fromJS({
     focused: false,
     mouseIn: false,
     list: [],
     page: 1,
     totalPage: 1,
-    topics: []
+    topics: [],
+    toolbar:""
 });
 
 const changeList = (state, action) => {
@@ -33,6 +36,8 @@ export default (state = defaultState, action) => {
             return state.set("page", action.page);
         case constants.CHANGE_TOPICS:
             return state.set("topics",action.data)
+        case constants.CHANGE_TOOL_BAR:
+            return state.set("toolbar",action.data.toolbar)
         default:
             return state;
     }

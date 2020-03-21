@@ -2,8 +2,8 @@ import { fromJS } from "immutable";
 import * as constants from "./constants";
 
 const defaultState = fromJS({
-  login: false,
-  showPopup: true,
+  login: true,
+  showPopup: false,
   isLoginPage: true,
 });
 

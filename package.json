@@ -7,6 +7,7 @@
     "@matejmazur/react-mathjax": "^0.1.10",
     "antd": "^3.26.8",
     "axios": "^0.18.0",
+    "for-editor": "^0.3.5",
     "immutable": "^3.8.2",
     "markdown-navbar": "^1.4.0",
     "marked": "^0.8.0",

@@ -4,6 +4,8 @@ import { withRouter } from "react-router-dom";
 import { DetailWrapper, Header, Content, ArticleWrapper, StepBarWrapper,  FixedInStepBarWrapper, NavBarWrapper } from "./style";
 import MarkdownRenderer from "../../markdown/index"
 import { actionCreators } from "./store";
+import {actionCreators as headerActionCreator} from "../../common/header/store"
+import {ARTICLE_TOOL_BAR}from "../../common/header/store/constants"
 import ReadList from "./components/stepbar";
 import MdNavBar from "./components/navbar"
 
@@ -55,7 +57,7 @@ const mapDispatch = dispatch => ({
     dispatch(actionCreators.getDetail(id));
   },
   showToolBar(){
-    dispatch(actionCreators.switchToolBar(true))
+    dispatch(headerActionCreator.changeToolBar(ARTICLE_TOOL_BAR))
   },
   getReadList(){
     dispatch(actionCreators.getReadList(1))

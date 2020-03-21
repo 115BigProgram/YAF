@@ -65,7 +65,7 @@ export const NonHomeItemWrapper = styled.div`
     background-color:white;
     align-items:flex-start;
     top:${toolBarHeight*1/2}px;
-    left:auto;
+    left:-50%;
   }
 `;
 
@@ -86,6 +86,7 @@ export const NavItem = styled.div`
   &.active {
     color: dodgerblue;
   }
+
 `;
 
 export const LogoWrapper = styled.div`
@@ -230,6 +231,7 @@ export const Button = styled.div`
 `;
 
 export const TopicLineWrapper =styled.div`
+  display: ${props => props.show?"block":"none"};
   border-bottom: 1px solid #f0f0f0;
   width:100%;
 `

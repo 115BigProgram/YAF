@@ -4,7 +4,8 @@ import List from "./components/List";
 import Recommend from "./components/Recommend";
 import Writer from "./components/Writer";
 import { actionCreators } from "./store";
-import {actionCreators as detailActionCreator } from "../detail/store"
+import {actionCreators as headerActionCreator} from "../../common/header/store"
+import {TOPIC_TOOL_BAR}from "../../common/header/store/constants"
 import {BackTop } from "./style";
 
 import { HomeWrapper, HomeLeft, HomeRight,TagWrapper,TagItem } from "./style";
@@ -88,7 +89,7 @@ const mapDispatch = dispatch => ({
     dispatch(actionCreators.setTag(idx))
   },
   showTopic(){
-    dispatch(detailActionCreator.switchToolBar(false))
+    dispatch(headerActionCreator.changeToolBar(TOPIC_TOOL_BAR))
   }
 });
 

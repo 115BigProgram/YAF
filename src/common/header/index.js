@@ -3,9 +3,11 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import NavSearch from "../header/components/searchBar"
 import { actionCreators } from "./store";
+import * as toolbarTypes from "./store/constants"
 import { actionCreators as loginActionCreators } from "../../pages/login/store";
 import { actionCreators as HomeContentCreator } from "../../pages/home/store"
 import DetailPageToolBar from "../header/components/detailToolBar"
+import WriteToolBar from "./components/writeToolBar"
 
 import {
     HeaderWrapper,
@@ -24,7 +26,7 @@ import {
     NavWrapper,
     NavItemShowButton,
     HeaderLineWrapper,
-    TopicLineWrapper,
+    TopicLineWrapper as ToolBarWrapper,
     LogoWrapper
 } from "./style";
 
@@ -91,7 +93,8 @@ class Header extends Component {
             logout,
             showToolBar,
             handleShowLogin,
-            handleShowRegister
+            handleShowRegister,
+            toolbar
         } = this.props;
         return (
             <div>
@@ -109,13 +112,12 @@ class Header extends Component {
                             </Link>
                             <NavItemShowButton className="arrow" onClick={this.showItem.bind(this)}></NavItemShowButton>
                             <NonHomeItemWrapper show={this.state.NavItemShow}>
-                                <NavItem className="left">下载App</NavItem>
+                                <Link to="/write">
+                                    <NavItem className="left">写文章</NavItem>
+                                </Link>
                                 <NavItem className="right">
-                                    <i className="iconfont">&#xe636;</i>
+                                    我的收藏
                                 </NavItem>
-                                <NavItem>
-                                    TEST
-                              </NavItem>
                             </NonHomeItemWrapper>
                         </NavWrapper>
                         <NavSearch />
@@ -133,14 +135,22 @@ class Header extends Component {
                         </Addition>
                     </HeaderWrapper>
                 </HeaderLineWrapper>
-                <TopicLineWrapper>
-                    {
-                        showToolBar ? <DetailPageToolBar /> :
-                            (< TopicWrapper >
-                                {this.getTopics()}
-                            </ TopicWrapper >)
-                    }
-                </TopicLineWrapper>
+
+                <ToolBarWrapper show={toolbar==toolbarTypes.ARTICLE_TOOL_BAR}>
+                    <DetailPageToolBar /> :
+                </ToolBarWrapper>
+
+                <ToolBarWrapper  show={toolbar==toolbarTypes.TOPIC_TOOL_BAR}>
+                    <TopicWrapper>
+                        {this.getTopics()}
+                    </TopicWrapper>
+                </ToolBarWrapper>
+
+                <ToolBarWrapper show={toolbar==toolbarTypes.WRITE_TOOL_BAR}>
+                    <WriteToolBar/>
+                </ToolBarWrapper>
+
+
             </div>
         );
     }
@@ -156,7 +166,8 @@ const mapStateToProps = state => {
         login: state.getIn(["login", "login"]),
         topics: state.getIn(["home", "topics"]),
         tags: state.getIn(["header", "tags"]),
-        showToolBar: state.getIn(["detail", "showToolBar"])
+        showToolBar: state.getIn(["detail", "showToolBar"]),
+        toolbar: state.getIn(["header", "toolbar"])
     };
 };
 
@@ -202,7 +213,7 @@ const mapDispathToProps = dispatch => {
         handleShowLogin() {
             dispatch(loginActionCreators.showPopup(true))
         },
-        handleShowRegister(){
+        handleShowRegister() {
             dispatch(loginActionCreators.showPopup(false))
         }
     };

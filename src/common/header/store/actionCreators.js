@@ -1,5 +1,5 @@
 import * as constants from "./constants";
-import {fromJS} from "immutable";
+import { fromJS } from "immutable";
 import axios from "axios";
 
 const changeList = data => ({
@@ -35,6 +35,20 @@ export const changePage = page => ({
     page
 });
 
+export const changeToolBarAction = (data)=>({
+    type:constants.CHANGE_TOOL_BAR,
+    data
+})
+
+export const changeToolBar = toolbar => {
+    return dispatch =>{
+        let data={}
+        data.toolbar=toolbar
+        dispatch(changeToolBarAction(data))
+    }
+}
+
+
 export const getList = () => {
     return dispatch => {
         axios
@@ -55,7 +69,7 @@ export const getTopics = () => {
             .get("/api/topics.json")
             .then(res => {
                 const raw = res.data.data;
-                let data=raw
+                let data = raw
                 dispatch(changeTopic(data))
             })
             .catch((err) => {
