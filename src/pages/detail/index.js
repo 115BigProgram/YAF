@@ -1,15 +1,20 @@
 import React, { PureComponent } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { DetailWrapper, Header, Content, ArticleWrapper, StepBarWrapper,  FixedInStepBarWrapper, NavBarWrapper } from "./style";
+import { DetailWrapper, Header, Content, ArticleWrapper,  GraphWrapper,  NavBarWrapper } from "./style";
 import MarkdownRenderer from "../../markdown/index"
 import { actionCreators } from "./store";
-import {actionCreators as headerActionCreator} from "../../common/header/store"
-import {ARTICLE_TOOL_BAR}from "../../common/header/store/constants"
+import { actionCreators as headerActionCreator } from "../../common/header/store"
+import { ARTICLE_TOOL_BAR } from "../../common/header/store/constants"
 import ReadList from "./components/stepbar";
 import MdNavBar from "./components/navbar"
+import TopicGraph from "./components/articlebrowser"
 
 class Detail extends PureComponent {
+  constructor(props){
+    super(props)
+  }
+
   componentWillUnmount() {
     const {
       resetStore
@@ -18,21 +23,22 @@ class Detail extends PureComponent {
   }
 
   render() {
-    const {content}=this.props
+    const { content } = this.props
     return (
       <div>
+        <GraphWrapper show={this.props.showReadList}>
+          <TopicGraph />
+        </GraphWrapper>
+
         <DetailWrapper>
-        <StepBarWrapper show={this.props.showReadList}>
-          <ReadList/>
-        </StepBarWrapper>
-        <ArticleWrapper>
-          <Header>{this.props.title}</Header>
-          <MarkdownRenderer source={this.props.content}></MarkdownRenderer>
-        </ArticleWrapper>
-        <NavBarWrapper show={this.props.showArticleIndex}>
-          <MdNavBar source={content}/>
-        </NavBarWrapper>
-      </DetailWrapper>
+          <ArticleWrapper>
+            <Header>{this.props.title}</Header>
+            <MarkdownRenderer source={this.props.content}></MarkdownRenderer>
+          </ArticleWrapper>
+          <NavBarWrapper show={this.props.showArticleIndex}>
+            <MdNavBar source={content} />
+          </NavBarWrapper>
+        </DetailWrapper>
       </div>
     );
   }
@@ -47,22 +53,22 @@ class Detail extends PureComponent {
 const mapState = state => ({
   title: state.getIn(["detail", "title"]),
   content: state.getIn(["detail", "content"]),
-  showReadList: state.getIn(["detail","showReadList"]),
-  showArticleIndex: state.getIn(["detail","showArticleIndex"]),
-  readList: state.getIn(["detail","readList"])
+  showReadList: state.getIn(["detail", "showReadList"]),
+  showArticleIndex: state.getIn(["detail", "showArticleIndex"]),
+  readList: state.getIn(["detail", "readList"])
 });
 
 const mapDispatch = dispatch => ({
   getDetail(id) {
     dispatch(actionCreators.getDetail(id));
   },
-  showToolBar(){
+  showToolBar() {
     dispatch(headerActionCreator.changeToolBar(ARTICLE_TOOL_BAR))
   },
-  getReadList(){
+  getReadList() {
     dispatch(actionCreators.getReadList(1))
   },
-  resetStore(){
+  resetStore() {
     console.log('invoked')
     dispatch(actionCreators.resetStore())
   }

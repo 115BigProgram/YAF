@@ -5,13 +5,21 @@
   "dependencies": {
     "@ant-design/colors": "^3.2.2",
     "@matejmazur/react-mathjax": "^0.1.10",
+    "@vx/gradient": "0.0.195",
+    "@vx/group": "0.0.195",
+    "@vx/hierarchy": "0.0.195",
+    "@vx/network": "0.0.195",
+    "@vx/shape": "0.0.195",
     "antd": "^3.26.8",
     "axios": "^0.18.0",
+    "d3": "^5.15.0",
+    "d3-hierarchy": "^1.1.9",
     "for-editor": "^0.3.5",
     "immutable": "^3.8.2",
     "markdown-navbar": "^1.4.0",
     "marked": "^0.8.0",
     "react": "^16.4.0",
+    "react-d3-graph": "^2.4.0",
     "react-dom": "^16.4.0",
     "react-katex": "^2.0.2",
     "react-loadable": "^5.4.0",
@@ -29,7 +37,8 @@
     "redux-thunk": "^2.3.0",
     "remark-math": "^2.0.0",
     "styled-components": "^3.3.2",
-    "texme": "^0.7.0"
+    "texme": "^0.7.0",
+    "vis-react": "^0.5.1"
   },
   "scripts": {
     "start": "react-scripts start",

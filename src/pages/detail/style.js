@@ -9,9 +9,8 @@ export const DetailWrapper = styled.div`
   align-items:flex-start;
 `;
 
-export const StepBarWrapper =styled.div`
+export const GraphWrapper =styled.div`
   display:${props=>props.show?"block":"none"};
-  min-height:100vh;
   overflow:auto;
   background-color:#f5f5f5;
   border-right-style:solid;

@@ -9,31 +9,32 @@ import Login from "./pages/login";
 import Write from "./pages/write";
 import store from "./store";
 import 'antd/dist/antd.css';
-import {ContentContainer, MainContainer, TopNavBarContainer} from "./style";
-import MarkdownRenderer from "./markdown";
+import { ContentContainer, MainContainer, TopNavBarContainer } from "./style";
+import ArticleBrowser from "./pages/detail/components/articlebrowser"
 class App extends Component {
   render() {
     return (
       <Provider store={store}>
         <div>
-        <BrowserRouter>
-          <div>
-            <TopNavBarContainer>
-              <Header />
-            </TopNavBarContainer>
+          <BrowserRouter>
             <div>
-              <MainContainer>
-                <ContentContainer>
-                  <LoginPopup/>
-                  <Route path="/" exact component={Home} />
-                  <Route path="/login" exact component={Login} />
-                  <Route path="/write" exact component={Write} />
-                  <Route path="/detail/:id" exact component={Detail} />
-                </ContentContainer>
-              </MainContainer>
+              <TopNavBarContainer>
+                <Header />
+              </TopNavBarContainer>
+              <div>
+                <MainContainer>
+                  <ContentContainer>
+                    <ArticleBrowser></ArticleBrowser>
+                    <LoginPopup />
+                    <Route path="/" exact component={Home} />
+                    <Route path="/login" exact component={Login} />
+                    <Route path="/write" exact component={Write} />
+                    <Route path="/detail/:id" exact component={Detail} />
+                  </ContentContainer>
+                </MainContainer>
+              </div>
             </div>
-          </div>
-        </BrowserRouter>
+          </BrowserRouter>
         </div>
       </Provider>
     );

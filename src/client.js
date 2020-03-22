@@ -15,6 +15,7 @@ export function handleResponse(res){
 }
 
 export function handleErr(err){
+    console.log(err)
     if (err.code!==undefined){
         return err.code+":"+err.msg
     }

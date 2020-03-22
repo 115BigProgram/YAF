@@ -56,7 +56,6 @@ class ReadList extends Component{
         <div>
             <StepBarWrapper>
             <Steps progressDot current={articleIdx} direction="vertical" onChange={this.changeArticle}>
-                {this.getArticles()}
             </Steps>
             </StepBarWrapper>
         </div>
