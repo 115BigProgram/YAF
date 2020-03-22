@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import { connect } from "react-redux"
 import { actionCreators } from "../../store"
-import {LineWrapper, EditorWrapper, TitleWrapper} from "./style"
+import {LineWrapper, EditorWrapper, TitleWrapper, DomainItemWrapper, TopicItemWrapper} from "./style"
 
 class WriteToolBar extends Component {
     constructor(props){
@@ -27,9 +27,9 @@ class WriteToolBar extends Component {
         }
 
         domains.toJS().forEach(domain => {
-            items.push(<div key={domain.id==null?0:domain.id}>
+            items.push(<DomainItemWrapper key={domain.id==null?0:domain.id}>
                 {domain.domain}
-            </div>)
+            </DomainItemWrapper>)
         })
 
         return items
@@ -44,9 +44,9 @@ class WriteToolBar extends Component {
 
         let items=[]
         topics.toJS().forEach(topic => {
-            items.push(<div key={topic.id==null?0:topic.id}>
+            items.push(<TopicItemWrapper key={topic.id==null?0:topic.id}>
                 {topic.topic}
-            </div>)
+            </TopicItemWrapper>)
         })
 
         return items

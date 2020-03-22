@@ -11,3 +11,9 @@ export const EditorWrapper =styled.div`
 
 export const TitleWrapper = styled.div`
 `
+
+export const DomainItemWrapper =styled.div`
+`
+
+export const TopicItemWrapper =styled.div`
+`
