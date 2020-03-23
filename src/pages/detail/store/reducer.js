@@ -10,9 +10,18 @@ const defaultState = fromJS({
   readList: new TreeNode("empty", 0),
   topicTree: new TreeNode("cnn", 8),
   topicGraph: new Graph({ id: 8, name: "cnn" }),
+
   articleBrowserButtons: ["获得前驱", "浏览文章", "关闭节点"],
   articleBrowserActiveButton: 0,
-  readHistory: [],
+  showBrowser: true,
+  articlesToBrowser: [],
+  articlesCurrentTopic: "cnn",
+  articlesToRecommend: [],
+  articlesToBrowserPage: 0,
+  articlesToBrowserKeyword: "",
+  readHistory: [{id:8,name:"cnn"}],
+  
+
   showReadList: false,
   currentArticle: 0,
 });
@@ -25,6 +34,12 @@ const changeDetail = (state, action) => {
     topicGraph: new Graph({ id: action.data.content.topic, name: action.data.content.topicName })
   });
 };
+
+const changeBrowserList = (state, action) => {
+  return state.merge({
+    articlesToBrowserPage: action.data.nextPage
+  })
+}
 
 const reset = (state) => {
   return state.merge(defaultState)
@@ -53,6 +68,10 @@ export default (state = defaultState, action) => {
       return state.set("topicGraph", action.data.topicGraph)
     case constants.CHANGE_ARTICLE_BROWSER_ACTIVE_BUTTON:
       return state.set("articleBrowserActiveButton", action.data.activeButton)
+    case constants.GET_RECOMMEND_LIST:
+      return state.set("articlesToRecommend", action.data.recommendList)
+    case constants.CHANGE_CURRENT_TOPIC:
+      return state.set("articlesCurrentTopic",action.data.topic)
     default:
       return state;
   }

@@ -36,14 +36,14 @@ export const ButtonWrapper = styled.div`
     padding:5px;
     margin-bottom:10px;
     font-size:.90rem;
-    color:${props=>props.active?"white":"dodgerblue"};
-    background-color:${props=>props.active?"dodgerblue":"white"};
+    color:${props => props.active ? "white" : "dodgerblue"};
+    background-color:${props => props.active ? "dodgerblue" : "white"};
     border-radius:0.5rem;
     cursor: pointer;
 
 `
 
-export const GraphWrapper =styled.div`
+export const GraphWrapper = styled.div`
     display:flex;
     flex:1;
     flex-direction:row;
@@ -55,6 +55,21 @@ export const GraphWrapper =styled.div`
 `
 
 
-export const HistoryWrapper =styled.div`
+export const HistoryWrapper = styled.div`
     display:flex;
+`
+
+export const ListWrapper = styled.div`
+    display:${props => props.show ? "block" : "none"};
+`
+
+export const ShowListButton = styled.div`
+    display:block;
+    text-align:center;
+    padding:5px;
+    font-size:.90rem;
+    color :dodgerblue;
+    background-color:white;
+    cursor: pointer;
+    
 `

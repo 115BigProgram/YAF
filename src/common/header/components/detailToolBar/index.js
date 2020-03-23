@@ -1,47 +1,44 @@
-import React,{Component} from "react"
+import React, { Component } from "react"
 import { ToolBarWrapper, Button } from "./style"
-import {actionCreators} from "../../../../pages/detail/store"
+import { actionCreators } from "../../../../pages/detail/store"
 import { connect } from "react-redux";
 
-class DetailPageToolBar extends Component{
-    goBack(){
+class DetailPageToolBar extends Component {
+    goBack() {
         window.history.back()
     }
-    render(){
-        const{ 
+    render() {
+        const {
             showReadList,
-            srl,
             showArticleIndex
         } = this.props
-
-        console.log(srl)
 
         return (
             <div>
                 <ToolBarWrapper>
                     <Button onClick={this.goBack.bind(this)}>返回</Button>
-                    <Button onClick={()=>showReadList()} >浏览主题</Button>
-                    <Button onClick={()=>showArticleIndex()}>文章索引</Button>
+                    <Button onClick={() => showReadList()} >浏览主题</Button>
+                    <Button onClick={() => showArticleIndex()}>文章索引</Button>
                 </ToolBarWrapper>
             </div>
         )
     }
-} 
+}
 
 const mapState = state => ({
-    srl:state.getIn(["detail","showReadList"])
+    srl: state.getIn(["detail", "showReadList"])
 });
 
 const mapDispatch = dispatch => ({
-  showTopic(){
-    dispatch(actionCreators.switchToolBar(false))
-  },
-  showReadList(){
-      dispatch(actionCreators.switchReadList())
-  },
-  showArticleIndex(){
-      dispatch(actionCreators.switchArticleIndex())
-  }
+    showTopic() {
+        dispatch(actionCreators.switchToolBar(false))
+    },
+    showReadList() {
+        dispatch(actionCreators.switchReadList())
+    },
+    showArticleIndex() {
+        dispatch(actionCreators.switchArticleIndex())
+    }
 });
 
 export default connect(
