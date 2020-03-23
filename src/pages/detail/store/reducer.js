@@ -16,10 +16,12 @@ const defaultState = fromJS({
   showBrowser: true,
   articlesToBrowser: [],
   articlesCurrentTopic: "cnn",
+  articlesCurrentTopicID: 8,
   articlesToRecommend: [],
   articlesToBrowserPage: 0,
+  articlesToBrowserTotPage: 0,
   articlesToBrowserKeyword: "",
-  readHistory: [{ topic: "cnn",aid:"GqVEAXEBzHQ1MU8HvfsJ",title:"卷积" }],
+  readHistory: [{ topic: "cnn", aid: "GqVEAXEBzHQ1MU8HvfsJ", title: "卷积" }],
   currentHistory: 0,
 
 
@@ -27,10 +29,10 @@ const defaultState = fromJS({
   currentArticle: 0,
 });
 
-const addReadHistory = (state,action)=>{
+const addReadHistory = (state, action) => {
   return state.merge({
-    readHistory:action.data.readHistory,
-    currentHistory:action.data.current
+    readHistory: action.data.readHistory,
+    currentHistory: action.data.current
   })
 }
 
@@ -52,10 +54,12 @@ const changeDetailPageArticle = (state, action) => {
   });
 }
 
-const changeBrowserList = (state, action) => {
-  return state.merge({
-    articlesToBrowserPage: action.data.nextPage
-  })
+const getBrowserList = (state, action) => {
+  return state.set("articlesToBrowser", action.data.browserList)
+  //return state.merge({
+  //  articlesToBrowserTotPage: action.data.totPage,
+  //  articlesToBrowser: action.data.browserList,
+  //})
 }
 
 const reset = (state) => {
@@ -63,10 +67,11 @@ const reset = (state) => {
 }
 
 
+
 export default (state = defaultState, action) => {
   switch (action.type) {
     case constants.ADD_READ_HISTORY:
-      return addReadHistory(state,action)
+      return addReadHistory(state, action)
     case constants.CHANGE_DETAIL_PAGE_ARTICLE_WITH_EXPLORER:
       return changeDetailPageArticle(state, action)
     case constants.RESET_STORE:
@@ -91,8 +96,20 @@ export default (state = defaultState, action) => {
       return state.set("articleBrowserActiveButton", action.data.activeButton)
     case constants.GET_RECOMMEND_LIST:
       return state.set("articlesToRecommend", action.data.recommendList)
+    case constants.GET_BROWSER_LIST:
+      return getBrowserList(state, action)
     case constants.CHANGE_CURRENT_TOPIC:
-      return state.set("articlesCurrentTopic", action.data.topic)
+      console.log(action)
+      return state.merge({
+        articlesCurrentTopic: action.data.topic,
+        articlesCurrentTopicID: action.data.topicID
+      })
+    case constants.CHANGE_PAGE_ACTION:
+      return state.set("articlesToBrowserPage", action.data.nextPage)
+    case constants.CHANGE_PAGE_TOT_NUM:
+      return state.set("articlesToBrowserTotPage", action.data.totPage)
+    case constants.UPDATE_KEY_WORD:
+      return state.set("articlesToBrowserKeyword",action.data.keyword)
     default:
       return state;
   }

@@ -44,10 +44,12 @@ export const ListAreaWrapper = styled.div`
 `
 
 export const RecommendListWrapper = styled.div`
+  display:${props=>props.show?"block":"none"};
 
 `
 
 export const BrowserListWrapper = styled.div`
+  display:${props=>props.show?"block":"none"};
 
 `
 

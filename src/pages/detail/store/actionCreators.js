@@ -199,6 +199,74 @@ const getBrowserArticlesAction = (data) => ({
   data
 })
 
+const changePageAction = (data) => ({
+  type: constants.CHANGE_PAGE_ACTION,
+  data
+})
+
+const changePageTotAction = (data) => ({
+  type: constants.CHANGE_PAGE_TOT_NUM,
+  data
+})
+
+export const changeBrowserListPage = (isNext) => {
+  return (dispatch, getState) => {
+    let {
+      articlesToBrowserPage,
+      articlesToBrowserTotPage,
+      articlesToBrowserKeyword,
+      articlesCurrentTopicID
+    } = getState().toJS().detail
+    let nextPage = articlesToBrowserPage
+    if (isNext) {
+      if (articlesToBrowserPage + 1 >= articlesToBrowserTotPage) {
+        return
+      }
+      nextPage++
+    } else {
+      if (articlesToBrowserPage <= 0) {
+        return
+      }
+      nextPage--
+    }
+    let url = `/articleList?size=3&page=${nextPage}&topicID=${articlesCurrentTopicID}`
+    let urlkw = articlesToBrowserKeyword == "" ? "&kw" : `&kw=${articlesToBrowserKeyword}`
+    console.log(url + urlkw)
+    console.log(getState().toJS().detail)
+    dispatch(changePageAction({ nextPage: nextPage }))
+    getArticle(dispatch, url + urlkw)
+  }
+}
+
+export const searchBrowserList = () => {
+  return (dispatch, getState) => {
+    let {
+      articlesToBrowserKeyword,
+      articlesCurrentTopicID
+    } = getState().toJS().detail
+
+    let url = `/articleList?size=3&page=${0}&topicID=${articlesCurrentTopicID}`
+    let urlkw = articlesToBrowserKeyword == "" ? "&kw" : `&kw=${articlesToBrowserKeyword}`
+    dispatch(changePageAction({ nextPage: 0 }))
+    console.log(url+urlkw)
+    getArticle(dispatch, url + urlkw)
+  }
+}
+
+const getArticle = (dispatch, url) => {
+  client
+    .get(url)
+    .then(res => {
+      let resData = handleResponse(res)
+      console.log(resData)
+      dispatch(getBrowserArticlesAction({ browserList: resData.articles }))
+      dispatch(changePageTotAction({ totPage: resData.totalPagesNum }))
+    })
+    .catch(err => {
+      handleErr(err)
+    })
+}
+
 const changeCurrentTopic = (data) => ({
   type: constants.CHANGE_CURRENT_TOPIC,
   data: data
@@ -214,7 +282,9 @@ const getNodeArticles = (dispatch, getState, targetID) => {
   let browserUrl = `/articleList?page=${articlesToBrowserPage}&size=3&kw&topicID=${targetID}`
 
   let newTopic = topicGraph.getNode(targetID)
-  dispatch(changeCurrentTopic({ topic: newTopic.name }))
+  console.log(newTopic)
+  dispatch(changeCurrentTopic({ topic: newTopic.name, topicID: newTopic.id }))
+  dispatch(changePageAction({ nextPage: 0 }))
 
   client
     .get(recommendUrl)
@@ -222,7 +292,6 @@ const getNodeArticles = (dispatch, getState, targetID) => {
       let resData = handleResponse(res)
       let data = {}
       data.recommendList = resData.recommendArticles
-      console.log(data)
       dispatch(getRecommendArticlesAction(data))
     })
     .catch(err => {
@@ -233,7 +302,8 @@ const getNodeArticles = (dispatch, getState, targetID) => {
     .get(browserUrl)
     .then(res => {
       let resData = handleResponse(res)
-      console.log(resData)
+      dispatch(getBrowserArticlesAction({ browserList: resData.articles }))
+      dispatch(changePageTotAction({ totPage: resData.totalPagesNum }))
     })
     .catch(err => {
       handleErr(err)
@@ -247,9 +317,12 @@ export const onClickNode = (nodeID) => {
     switch (curTask) {
       case 0:
         getPreNodes(dispatch, getState, nodeID)
+        return
       case 1:
         getNodeArticles(dispatch, getState, nodeID)
+        return
       default:
+        return
     }
   }
 }
@@ -295,17 +368,15 @@ export const changeDetailPageArticle = (aid) => {
         dispatch(changeDetailPageArticleAction(data));
 
 
-        let targetID=-1
+        let targetID = -1
         let has = readHistory.some((e, idx) => {
           if (e.aid == resData.id) {
-            targetID=idx
+            targetID = idx
             return true
           }
           return false
         })
 
-        console.log(has)
-        console.log(targetID)
         if (!has) {
           readHistory.unshift({ topic: articlesCurrentTopic, aid: resData.id, title: resData.title })
           targetID = 0
@@ -315,5 +386,16 @@ export const changeDetailPageArticle = (aid) => {
       .catch(err => {
         handleErr(err)
       })
+  }
+}
+
+const updateKeywordAction = (data) => ({
+  type: constants.UPDATE_KEY_WORD,
+  data
+})
+
+export const updateKeyword = (kw) => {
+  return (dispatch) => {
+    dispatch(updateKeywordAction({ keyword: kw }))
   }
 }

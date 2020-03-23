@@ -24,9 +24,6 @@ export const ButtonsWrapper = styled.div`
     background-color:white;
     border-top-left-radius:0.5rem;
     border-bottom-left-radius:0.5rem;
-    border-right-style:solid;
-    border-right-width:0.5px;
-    border-right-color:grey;
 `
 
 export const CenterBlock = styled.div`
@@ -67,12 +64,21 @@ export const GraphWrapper = styled.div`
     background-color:white;
 `
 
+export const BlankWrapper = styled.div`
+    background-color:white;
+    color:black;
+    width:100%;
+    height:100px;
+    font-size:50px;
+    text-align:center
+`
+
 
 export const HistoryWrapper = styled.div`
     display:flex;
     margin-top:5px;
     flex-wrap:wrap;
-
+    margin-bottom:10px;
 `
 
 export const HistoryTitleWrapper = styled.div`
@@ -94,5 +100,32 @@ export const ShowListButton = styled.div`
     color :dodgerblue;
     background-color:white;
     cursor: pointer;
-    
+`
+
+export const BrowserToolBar = styled.div`
+    display:flex;
+    align-items:center;
+    margin-top:15px;
+`
+
+export const PageNumWrapper = styled.div`
+    font-size:0.7rem;
+    color:black;
+    background-color:white;
+    border-radius:0.5rem;
+    border-style:solid;
+    border-color:grey;
+    border-width:0.5px;
+    min-width:40px;
+    margin-right:5px;
+    text-align:center;
+`
+
+export const ToolBarButton = styled.div`
+    font-size:0.7rem;
+    color:dodgerblue;
+    cursor: pointer;
+    background-color:white;
+    min-width:40px;
+    text-align:left;
 `

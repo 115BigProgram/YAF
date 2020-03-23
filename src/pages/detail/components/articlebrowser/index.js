@@ -1,9 +1,10 @@
 import React, { Component } from "react"
 import { connect } from "react-redux"
-import { MainWrapper, ButtonsWrapper, GraphWrapper, HistoryWrapper, ButtonWrapper, TitleWrapper, ListWrapper, ShowListButton, HistoryItemWrapper,HistoryTitleWrapper } from "./style"
+import { MainWrapper, ButtonsWrapper, GraphWrapper, HistoryWrapper, ButtonWrapper, TitleWrapper, ListWrapper, ShowListButton, HistoryItemWrapper, HistoryTitleWrapper } from "./style"
 import Graph from './graph'
 import { actionCreators } from "../../store"
 import List from "../browserList"
+import { RecommendListWrapper } from "../browserList/style"
 
 class ArticleBrowser extends Component {
     constructor(props) {
@@ -56,13 +57,14 @@ class ArticleBrowser extends Component {
 
         return obj.map((e, idx) => {
             return (
-                <HistoryItemWrapper key={e.aid} active={currentHistory==idx}
-                onClick={()=>{handleClickHistory(e.aid)}}>
+                <HistoryItemWrapper key={e.aid} active={currentHistory == idx}
+                    onClick={() => { handleClickHistory(e.aid) }}>
                     {e.topic + ':' + e.title}
                 </HistoryItemWrapper>
             )
         })
     }
+
 
     render() {
         const {
@@ -92,12 +94,7 @@ class ArticleBrowser extends Component {
                         </div>
                     </GraphWrapper>
                 </MainWrapper>
-                <HistoryWrapper>
-                    <HistoryTitleWrapper>历史记录:</HistoryTitleWrapper>
-                    {
-                        this.getReadHistory()
-                    }
-                </HistoryWrapper>
+
                 <ShowListButton
                     onClick={this.onClickBrowserListShowButton}
                 >
@@ -106,6 +103,12 @@ class ArticleBrowser extends Component {
                 <ListWrapper show={browserListState}>
                     <List />
                 </ListWrapper>
+                <HistoryWrapper>
+                    <HistoryTitleWrapper>历史记录:</HistoryTitleWrapper>
+                    {
+                        this.getReadHistory()
+                    }
+                </HistoryWrapper>
             </div>
         )
     }
@@ -123,7 +126,7 @@ const mapDispatch = dispatch => ({
     handleChangeButton(idx) {
         dispatch(actionCreators.changeArticleBrowserActiveButton(idx))
     },
-    handleClickHistory(id){
+    handleClickHistory(id) {
         dispatch(actionCreators.changeDetailPageArticle(id))
     }
 })
