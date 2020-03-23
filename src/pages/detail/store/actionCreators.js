@@ -9,6 +9,11 @@ const changeDetail = (data) => ({
   data: data
 });
 
+const changeFavor = (data) => ({
+  type: constants.CHANGE_FAVOR,
+  data:data
+});
+
 const switchToolBarAction = (data) => ({
   type: constants.SHOW_TOOL_BAR,
   data: data
@@ -44,7 +49,7 @@ export const getDetail = id => {
     //the logic here is just for demo 
     //if backend presendted, url+id is enough
     client
-      .get("/article?aid=" + id)
+      .get("/article?aid="+id+"&userID=2")
       .then(res => {
         let content = handleResponse(res)
         console.log(res)
@@ -57,10 +62,21 @@ export const getDetail = id => {
   };
 };
 
+export const favorArticle = (id) => {
+  return (dispatch, getState) => {
+      client.get("/favorArticle?userID=2" + "&articleID=" + id).then(function (res) {
+      dispatch(changeFavor(data));
+      var content = handleResponse(res);
+      var data = {};
+      data.content = content;
+      data.idx = 0;
+    }).catch(function () {});
+  };
+};
+
 export const getContent = (aid, idx, dispatch) => {
-  console.log("/api/articles/" + aid)
   axios
-    .get("/api/articles/" + aid)
+    .get("/api/articles/"+aid+"&userID=2")
     .then(res => {
       let result = handleResponse(res)
       console.log(res.content)

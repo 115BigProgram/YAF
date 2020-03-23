@@ -24,7 +24,6 @@ class App extends Component {
               <div>
                 <MainContainer>
                   <ContentContainer>
-                    <ArticleBrowser></ArticleBrowser>
                     <LoginPopup />
                     <Route path="/" exact component={Home} />
                     <Route path="/login" exact component={Login} />

@@ -13,9 +13,6 @@ export const GraphWrapper =styled.div`
   display:${props=>props.show?"block":"none"};
   overflow:auto;
   background-color:#f5f5f5;
-  border-right-style:solid;
-  border-color:black;
-  border-width:1px;
 `
 
 export const NavBarWrapper =styled.div`

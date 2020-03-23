@@ -2,10 +2,11 @@ import styled from "styled-components";
 
 export const CurrentTopicWrapper = styled.div`
   width:100%;
-  text-align:center;
+  text-align:left;
   color:black;
   background-color:white;
   font-size:1rem;
+  padding-left:25px;
   ::before{
     content:"当前主题:"
   }

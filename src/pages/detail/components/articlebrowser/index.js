@@ -10,7 +10,7 @@ class ArticleBrowser extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            browserListState: true
+            browserListState: false
         }
 
         this.onClickBrowserListShowButton = this.onClickBrowserListShowButton.bind(this)
@@ -98,7 +98,7 @@ class ArticleBrowser extends Component {
                 <ShowListButton
                     onClick={this.onClickBrowserListShowButton}
                 >
-                    {browserListState ? "关闭" : "展开"}
+                    {browserListState ? "关闭文章列表" : "展开文章列表"}
                 </ShowListButton>
                 <ListWrapper show={browserListState}>
                     <List />

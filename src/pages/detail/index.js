@@ -33,6 +33,9 @@ class Detail extends PureComponent {
         <DetailWrapper>
           <ArticleWrapper>
             <Header>{this.props.title}</Header>
+            <span style={{color: "#85A8EC",position:"relative",bottom:8}}>本文作者:{this.props.authorName}</span>
+            <span style={{color: "#969696",position:"relative",bottom:8,left:20}}>最后发布于:{this.props.publishTime}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;浏览数:{this.props.readNum}</span>
+            <span onClick={this.favorArticle.bind(this)} style={{cursor:"pointer",color: "#F08140", position:"relative",bottom:8,left:40}}><img width="20vw" height="20vw" src={this.props.logoSvg}/>收藏</span>
             <MarkdownRenderer source={this.props.content}></MarkdownRenderer>
           </ArticleWrapper>
           <NavBarWrapper show={this.props.showArticleIndex}>
@@ -42,7 +45,10 @@ class Detail extends PureComponent {
       </div>
     );
   }
-
+  favorArticle()
+  {
+    this.props.favorArticle(this.props.match.params.id)
+  }
   componentDidMount() {
     this.props.getDetail(this.props.match.params.id);
     //this.props.getReadList()
@@ -51,6 +57,10 @@ class Detail extends PureComponent {
 }
 
 const mapState = state => ({
+  authorName:state.getIn(["detail","authorName"]),
+  publishTime:state.getIn(["detail","publishTime"]),
+  readNum:state.getIn(["detail","readNum"]),
+  logoSvg:state.getIn(["detail","logoSvg"]),
   title: state.getIn(["detail", "title"]),
   content: state.getIn(["detail", "content"]),
   showReadList: state.getIn(["detail", "showReadList"]),
@@ -61,6 +71,10 @@ const mapState = state => ({
 const mapDispatch = dispatch => ({
   getDetail(id) {
     dispatch(actionCreators.getDetail(id));
+  },
+  favorArticle(id)
+  {
+    dispatch(actionCreators.favorArticle(id))
   },
   showToolBar() {
     dispatch(headerActionCreator.changeToolBar(ARTICLE_TOOL_BAR))
