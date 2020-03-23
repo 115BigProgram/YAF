@@ -137,7 +137,7 @@ class Header extends Component {
                 </HeaderLineWrapper>
 
                 <ToolBarWrapper show={toolbar==toolbarTypes.ARTICLE_TOOL_BAR}>
-                    <DetailPageToolBar /> :
+                    <DetailPageToolBar />
                 </ToolBarWrapper>
 
                 <ToolBarWrapper  show={toolbar==toolbarTypes.TOPIC_TOOL_BAR}>

@@ -105,6 +105,11 @@ export class Graph {
         this.addNode=this.addNode.bind(this)
         this.getLinks=this.getLinks.bind(this)
         this.getNodes=this.getNodes.bind(this)
+        this.getNode=this.getNode.bind(this)
+    }
+
+    getNode(idx){
+        return this.hashNodes[idx]
     }
 
     addLink(source, target) {
