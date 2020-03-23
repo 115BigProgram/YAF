@@ -1,35 +1,40 @@
-import React,{Component} from "react"
-import {connect} from "react-redux"
-import { ItemWrapper,TitleWrapper,ContentWrapper } from "./style"
-import {actionCreators} from "../../../../store"
+import React, { Component } from "react"
+import { connect } from "react-redux"
+import { ItemWrapper, TitleWrapper, ContentWrapper } from "./style"
+import { actionCreators } from "../../../../store"
 
-class ListItem extends Component{
-    constructor(props){
+class ListItem extends Component {
+    constructor(props) {
         super(props)
     }
 
-    render(){
+    render() {
         const {
             title,
             content,
             id,
             handlieClickTitle
-        }=this.props
+        } = this.props
         return (
             <ItemWrapper>
-                <TitleWrapper onClick={()=>{handlieClickTitle(id)}}>{title}</TitleWrapper>
-                <ContentWrapper>{content}</ContentWrapper>
+                <TitleWrapper
+                    onClick={() => { handlieClickTitle(id) }}
+                    dangerouslySetInnerHTML={{ __html: title }}
+                />
+                <ContentWrapper
+                    dangerouslySetInnerHTML={{ __html: content }}
+                />
             </ItemWrapper>
         )
     }
 }
 
-const mapState=state=>({
+const mapState = state => ({
 
 })
 
-const mapDispatch=dispatch=>({
-    handlieClickTitle(id){
+const mapDispatch = dispatch => ({
+    handlieClickTitle(id) {
         console.log(id)
         dispatch(actionCreators.changeDetailPageArticle(id))
     }

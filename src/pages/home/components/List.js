@@ -14,8 +14,8 @@ class List extends PureComponent {
             <Link key={index} to={"/detail/" + item.get("id")}>
               <ListItem>
                 <ListInfo>
-                  <h3 className="title">{item.get("title")}</h3>
-                  <div className="desc">{item.get("content")}</div>
+                  <h3 className="title" dangerouslySetInnerHTML={{__html:item.get("title")}}/>
+                  <div className="desc" dangerouslySetInnerHTML={{__html:item.get("content")}}/>
                 </ListInfo>
               </ListItem>
             </Link>
