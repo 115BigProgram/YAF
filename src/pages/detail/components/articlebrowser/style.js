@@ -6,6 +6,19 @@ export const MainWrapper = styled.div`
     display:flex;
 `
 
+export const HistoryItemWrapper = styled.div`
+    background-color:${props => props.active ? "black" : "white"};
+    cursor:pointer;
+    color:${props => props.active ? "white" : "black"};
+    padding:1px 5px 1px 5px;
+    margin-right:5px;
+    text-align:center;
+    border-style:solid;
+    border-radius:0.5rem;
+    border-color:black;
+    border-width:0.5px;
+`
+
 export const ButtonsWrapper = styled.div`
     padding:5px;
     background-color:white;
@@ -57,6 +70,16 @@ export const GraphWrapper = styled.div`
 
 export const HistoryWrapper = styled.div`
     display:flex;
+    margin-top:5px;
+    flex-wrap:wrap;
+
+`
+
+export const HistoryTitleWrapper = styled.div`
+    min-width:85.5px;
+    text-align:center;
+    font-size:.90rem;
+    color:grey;
 `
 
 export const ListWrapper = styled.div`

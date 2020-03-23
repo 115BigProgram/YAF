@@ -19,14 +19,23 @@ const defaultState = fromJS({
   articlesToRecommend: [],
   articlesToBrowserPage: 0,
   articlesToBrowserKeyword: "",
-  readHistory: [{id:8,name:"cnn"}],
-  
+  readHistory: [{ topic: "cnn",aid:"GqVEAXEBzHQ1MU8HvfsJ",title:"卷积" }],
+  currentHistory: 0,
+
 
   showReadList: false,
   currentArticle: 0,
 });
 
+const addReadHistory = (state,action)=>{
+  return state.merge({
+    readHistory:action.data.readHistory,
+    currentHistory:action.data.current
+  })
+}
+
 const changeDetail = (state, action) => {
+  console.log(action)
   return state.merge({
     currentArticle: action.data.idx,
     content: action.data.content.content,
@@ -34,6 +43,14 @@ const changeDetail = (state, action) => {
     topicGraph: new Graph({ id: action.data.content.topic, name: action.data.content.topicName })
   });
 };
+
+const changeDetailPageArticle = (state, action) => {
+  return state.merge({
+    currentArticle: action.data.content.id,
+    content: action.data.content.content,
+    title: action.data.content.title,
+  });
+}
 
 const changeBrowserList = (state, action) => {
   return state.merge({
@@ -48,6 +65,10 @@ const reset = (state) => {
 
 export default (state = defaultState, action) => {
   switch (action.type) {
+    case constants.ADD_READ_HISTORY:
+      return addReadHistory(state,action)
+    case constants.CHANGE_DETAIL_PAGE_ARTICLE_WITH_EXPLORER:
+      return changeDetailPageArticle(state, action)
     case constants.RESET_STORE:
       return reset(state)
     case constants.CHANGE_DETAIL:
@@ -71,7 +92,7 @@ export default (state = defaultState, action) => {
     case constants.GET_RECOMMEND_LIST:
       return state.set("articlesToRecommend", action.data.recommendList)
     case constants.CHANGE_CURRENT_TOPIC:
-      return state.set("articlesCurrentTopic",action.data.topic)
+      return state.set("articlesCurrentTopic", action.data.topic)
     default:
       return state;
   }

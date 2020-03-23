@@ -1,6 +1,6 @@
 import React, { Component } from "react"
 import { connect } from "react-redux"
-import { MainWrapper, ButtonsWrapper, GraphWrapper, HistoryWrapper, ButtonWrapper, TitleWrapper, ListWrapper, ShowListButton } from "./style"
+import { MainWrapper, ButtonsWrapper, GraphWrapper, HistoryWrapper, ButtonWrapper, TitleWrapper, ListWrapper, ShowListButton, HistoryItemWrapper,HistoryTitleWrapper } from "./style"
 import Graph from './graph'
 import { actionCreators } from "../../store"
 import List from "../browserList"
@@ -47,15 +47,19 @@ class ArticleBrowser extends Component {
 
     getReadHistory() {
         const {
-            readHistory
+            readHistory,
+            currentHistory,
+            handleClickHistory
         } = this.props
 
+        let obj = readHistory.toJS()
 
-        return readHistory.toJS().map((e, idx) => {
+        return obj.map((e, idx) => {
             return (
-                <div key={idx}>
-                    {e.name}
-                </div>
+                <HistoryItemWrapper key={e.aid} active={currentHistory==idx}
+                onClick={()=>{handleClickHistory(e.aid)}}>
+                    {e.topic + ':' + e.title}
+                </HistoryItemWrapper>
             )
         })
     }
@@ -89,7 +93,7 @@ class ArticleBrowser extends Component {
                     </GraphWrapper>
                 </MainWrapper>
                 <HistoryWrapper>
-                    <div>历史记录：</div>
+                    <HistoryTitleWrapper>历史记录:</HistoryTitleWrapper>
                     {
                         this.getReadHistory()
                     }
@@ -111,12 +115,16 @@ const mapState = state => ({
     topicGraph: state.getIn(["detail", "topicGraph"]),
     buttons: state.getIn(["detail", "articleBrowserButtons"]),
     curButton: state.getIn(["detail", "articleBrowserActiveButton"]),
-    readHistory: state.getIn(["detail", "readHistory"])
+    readHistory: state.getIn(["detail", "readHistory"]),
+    currentHistory: state.getIn(["detail", "currentHistory"])
 })
 
 const mapDispatch = dispatch => ({
     handleChangeButton(idx) {
         dispatch(actionCreators.changeArticleBrowserActiveButton(idx))
+    },
+    handleClickHistory(id){
+        dispatch(actionCreators.changeDetailPageArticle(id))
     }
 })
 

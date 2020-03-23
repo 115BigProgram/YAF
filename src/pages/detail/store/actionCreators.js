@@ -200,8 +200,8 @@ const getBrowserArticlesAction = (data) => ({
 })
 
 const changeCurrentTopic = (data) => ({
-  type:constants.CHANGE_CURRENT_TOPIC,
-  data:data
+  type: constants.CHANGE_CURRENT_TOPIC,
+  data: data
 })
 
 const getNodeArticles = (dispatch, getState, targetID) => {
@@ -213,8 +213,8 @@ const getNodeArticles = (dispatch, getState, targetID) => {
   let recommendUrl = "/getPreTopics?topicID=" + targetID
   let browserUrl = `/articleList?page=${articlesToBrowserPage}&size=3&kw&topicID=${targetID}`
 
-  let newTopic=topicGraph.getNode(targetID)
-  dispatch(changeCurrentTopic({topic:newTopic.name}))
+  let newTopic = topicGraph.getNode(targetID)
+  dispatch(changeCurrentTopic({ topic: newTopic.name }))
 
   client
     .get(recommendUrl)
@@ -264,5 +264,56 @@ export const changeArticleBrowserActiveButton = (idx) => {
     let data = {}
     data.activeButton = idx
     dispatch(changeArticleBrowserActiveButtonAction(data))
+  }
+}
+
+const changeDetailPageArticleAction = (data) => ({
+  type: constants.CHANGE_DETAIL_PAGE_ARTICLE_WITH_EXPLORER,
+  data
+})
+
+const addReadHistory = (data) => ({
+  type: constants.ADD_READ_HISTORY,
+  data
+})
+
+export const changeDetailPageArticle = (aid) => {
+  return (dispatch, getState) => {
+    const {
+      articlesCurrentTopic,
+      readHistory
+    } = getState().toJS().detail
+
+    let url = '/article?aid=' + aid
+    client
+      .get(url)
+      .then(res => {
+        let resData = handleResponse(res)
+        let data = {}
+        data.content = resData
+        data.idx = 0
+        dispatch(changeDetailPageArticleAction(data));
+
+
+        let targetID=-1
+        let has = readHistory.some((e, idx) => {
+          if (e.aid == resData.id) {
+            targetID=idx
+            return true
+          }
+          return false
+        })
+
+        console.log(has)
+        console.log(targetID)
+        if (!has) {
+          readHistory.unshift({ topic: articlesCurrentTopic, aid: resData.id, title: resData.title })
+          targetID = 0
+        }
+        dispatch(addReadHistory({ readHistory: readHistory, current: targetID }))
+      })
+      .catch(err => {
+        handleErr(err)
+      })
   }
 }
