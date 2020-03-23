@@ -8,11 +8,30 @@ class WriteToolBar extends Component {
         super(props)
         this.getDomains=this.getDomains.bind(this)
         this.getTopics=this.getTopics.bind(this)
+        this.selectDomain=this.selectDomain.bind(this)
+        this.selectTopic=this.selectTopic.bind(this)
     }
 
     componentDidMount() {
         console.log(this.props.topics)
         this.props.getDomain()
+    }
+
+    selectDomain(e){
+        var domains=this.getDomains()
+        var selectedDomain=0
+        for(var i=0;i<domains.length;i++)
+            if(domains[i].props.children==e.target.value)
+                selectedDomain=domains[i].key
+        this.props.getTopic(selectedDomain)     
+    }
+    selectTopic(e){
+        var topics=this.props.topics.toJS()
+        var selectedTopic=0
+        for(var i=0;i<topics.length;i++)
+            if(topics[i].topic==e.target.value)
+                selectedTopic=topics[i].id
+        this.props.setSelectedTopic(selectedTopic)  
     }
 
     getDomains() {
@@ -27,9 +46,9 @@ class WriteToolBar extends Component {
         }
 
         domains.toJS().forEach(domain => {
-            items.push(<DomainItemWrapper key={domain.id==null?0:domain.id}>
-                {domain.domain}
-            </DomainItemWrapper>)
+            items.push(
+                <option key={domain.id==null?0:domain.id}>{domain.domain}</option>
+            )
         })
 
         return items
@@ -44,9 +63,9 @@ class WriteToolBar extends Component {
 
         let items=[]
         topics.toJS().forEach(topic => {
-            items.push(<TopicItemWrapper key={topic.id==null?0:topic.id}>
+            items.push(<option key={topic.id==null?0:topic.id}>
                 {topic.topic}
-            </TopicItemWrapper>)
+            </option>)
         })
 
         return items
@@ -57,15 +76,19 @@ class WriteToolBar extends Component {
             <EditorWrapper>
                 <LineWrapper>
                     <TitleWrapper>学科:</TitleWrapper>
+                    <select onChange={this.selectDomain}>
                     {
                         this.getDomains()
                     }
+                    </select>
                 </LineWrapper>
                 <LineWrapper>
                     <TitleWrapper>主题:</TitleWrapper>
+                    <select onChange={this.selectTopic}>
                     {
                         this.getTopics()
                     }
+                    </select>
                 </LineWrapper>
             </EditorWrapper>
         )
@@ -81,6 +104,12 @@ const mapState = state => ({
 const mapDispatch = dispatch => ({
     getDomain() {
         dispatch(actionCreators.getDomains())
+    },
+    getTopic(domainID){
+        dispatch(actionCreators.getTopics(domainID))
+    },
+    setSelectedTopic(selectedTopic){
+        dispatch(actionCreators.setSelectedTopic(selectedTopic))
     }
 })
 

@@ -11,6 +11,7 @@ class WebSiteEditor extends Component {
         this.state = {
             value: ''
         }
+        this.handleChange=this.handleChange.bind(this)
     }
 
     handleChange(value) {
@@ -18,6 +19,7 @@ class WebSiteEditor extends Component {
         this.setState({
             value
         })
+        this.props.contentChange(value)
     }
 
     componentDidMount() {
@@ -55,6 +57,9 @@ const mapState = state => ({
 const mapDispatch = dispatch => ({
     showToolBar() {
         dispatch(headerActionCreators.changeToolBar(WRITE_TOOL_BAR))
+    },
+    contentChange(value){
+        dispatch(headerActionCreators.contentChange(value))
     }
 })
 

@@ -13,6 +13,17 @@ const changeTopic = data => ({
     data: fromJS(data)
 })
 
+const contentChangeAction = (data) => ({
+    type:constants.CONTANT_CHANGE,
+    data:data
+})
+
+export const contentChange = (data) =>{
+    return(dispatch, getState) => {
+        dispatch(contentChangeAction(data))
+        return
+    }
+}
 
 export const searchFocus = () => ({
     type: constants.SEARCH_FOCUS

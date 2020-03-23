@@ -20,10 +20,16 @@ const changeList = (state, action) => {
     });
 };
 
+const contentChange = (state, action) => {
+    return state.set("content", action.data);    
+}
+
 export default (state = defaultState, action) => {
     switch (action.type) {
         case constants.SEARCH_FOCUS:
             return state.set("focused", true);
+        case constants.CONTANT_CHANGE:
+            return contentChange(state, action)
         case constants.SEARCH_BLUR:
             return state.set("focused", false);
         case constants.CHANGE_LIST:
