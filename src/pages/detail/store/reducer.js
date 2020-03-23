@@ -25,7 +25,7 @@ const defaultState = fromJS({
   articlesToBrowserPage: 0,
   articlesToBrowserTotPage: 0,
   articlesToBrowserKeyword: "",
-  readHistory: [{ topic: "cnn", aid: "GqVEAXEBzHQ1MU8HvfsJ", title: "卷积" }],
+  readHistory: [],
   currentHistory: 0,
 
 
@@ -50,7 +50,14 @@ const changeDetail = (state, action) => {
     publishTime: action.data.content.publishTime,
     readNum: action.data.content.readNum,
     logoSvg: action.data.content.isFavor,
-    topicGraph: new Graph({ id: action.data.content.topic, name: action.data.content.topicName })
+    topicGraph: new Graph({ id: action.data.content.topic, name: action.data.content.topicName }),
+    readHistory:state.get("readHistory").concat([
+      {
+        topic:action.data.content.topicName,
+        aid:action.data.content.id,
+        title:action.data.content.title
+      }
+    ])
   });
 };
 
