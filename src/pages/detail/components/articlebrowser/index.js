@@ -4,7 +4,6 @@ import { MainWrapper, ButtonsWrapper, GraphWrapper, HistoryWrapper, ButtonWrappe
 import Graph from './graph'
 import { actionCreators } from "../../store"
 import List from "../browserList"
-import { RecommendListWrapper } from "../browserList/style"
 
 class ArticleBrowser extends Component {
     constructor(props) {

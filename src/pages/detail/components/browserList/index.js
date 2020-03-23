@@ -48,39 +48,37 @@ class BrowserList extends Component {
             search
         } = this.props
 
+        let browserItems = [(<BlankWrapper>内容为空</BlankWrapper>)]
         if (browserList.length !== undefined && browserList.length != 0) {
-            return (
-                <div>
-                    <BrowserToolBar>
-                        <Input 
+            browserItems = browserList.map((e, idx) => {
+                return (
+                    <ListItem id={e.id} content={e.content} title={e.title} key={idx}></ListItem>
+                )
+            })
+        }
+        return (
+            <div>
+                <BrowserToolBar>
+                    <Input
                         placeholder={"请输入关键字"}
                         value={browserKw}
-                        onChange={(e)=>{updateKw(e.target.value)}}
-                        ></Input>
-                        <ToolBarButton
-                        onClick={()=>{search()}} 
-                         >搜索</ToolBarButton>
-                        <Button onClick={() => { changePage(false) }}>上一页</Button>
-                        <PageNumWrapper>
-                            {(browserCurPage + 1) + "/" + (browserTotPage)}
-                        </PageNumWrapper>
-                        <Button onClick={() => { changePage(true) }}>下一页</Button>
-                    </BrowserToolBar>
-                    <div>
-                        {
-                            browserList.map((e, idx) => {
-                                return (
-                                    <ListItem id={e.id} content={e.content} title={e.title} key={idx}></ListItem>
-                                )
-                            })
-                        }
-                    </div>
-                </div>)
-        } else {
-            return (
-                <BlankWrapper>无浏览内容</BlankWrapper>
-            )
-        }
+                        onChange={(e) => { updateKw(e.target.value) }}
+                    ></Input>
+                    <ToolBarButton
+                        onClick={() => { search() }}
+                    >搜索</ToolBarButton>
+                    <Button onClick={() => { changePage(false) }}>上一页</Button>
+                    <PageNumWrapper>
+                        {(browserCurPage + 1) + "/" + (browserTotPage)}
+                    </PageNumWrapper>
+                    <Button onClick={() => { changePage(true) }}>下一页</Button>
+                </BrowserToolBar>
+                <div>
+                    {
+                        browserItems
+                    }
+                </div>
+            </div>)
 
     }
 
@@ -95,7 +93,7 @@ class BrowserList extends Component {
 
         return (
             <div>
-                <CurrentTopicWrapper>{currentTopic}</CurrentTopicWrapper>
+                <CurrentTopicWrapper>{" " + currentTopic}</CurrentTopicWrapper>
                 <TabGroupWrapper>
                     <TabWrapper active={showRecommend} className="first" onClick={() => { this.handleClickTab(true) }}>推荐文章</TabWrapper>
                     <TabWrapper active={!showRecommend} className="last" onClick={() => { this.handleClickTab(false) }}>浏览文章</TabWrapper>
@@ -130,10 +128,10 @@ const mapDispatch = dispatch => ({
     changePage(next) {
         dispatch(actionCreators.changeBrowserListPage(next))
     },
-    updateKw(kw){
+    updateKw(kw) {
         dispatch(actionCreators.updateKeyword(kw))
     },
-    search(){
+    search() {
         dispatch(actionCreators.searchBrowserList())
     }
 })

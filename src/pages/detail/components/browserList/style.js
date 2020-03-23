@@ -1,26 +1,24 @@
 import styled from "styled-components";
 
 export const CurrentTopicWrapper = styled.div`
-  width:100%;
   text-align:left;
   color:black;
   background-color:white;
   font-size:1rem;
-  padding-left:25px;
+  padding-left:5px;
   ::before{
     content:"当前主题:"
   }
 
     border-bottom-style:solid;
-    border-bottom-width:0.5px;
-    border-bottom-color:grey;
 
 `
 
 export const TabGroupWrapper = styled.div`
+  padding-top:10px;
   display:flex;
   align-items:center;
-background-color:white;
+  background-color:white;
 `
 export const TabWrapper = styled.div`
   color:${props => props.active ? "white" : "dodgerblue"};
