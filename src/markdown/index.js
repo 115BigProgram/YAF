@@ -2,13 +2,14 @@ import React, { Component } from "react";
 //import  * as texme from "texme"
 import * as ReactMarkdown from "react-markdown";
 import MathJax from "react-mathjax2";
-import RemarkMathPlugin  from "remark-math";
+import RemarkMathPlugin from "remark-math";
 import Codeblock from "./renderer/codeblock"
-import {fromJS} from "immutable"
+import { fromJS } from "immutable"
+import 'github-markdown-css'
 //import markdown from "marked"
 
-class MarkdownRenderer extends Component{
-  render(){
+class MarkdownRenderer extends Component {
+  render() {
     return (
       <div>
       </div>
@@ -25,13 +26,13 @@ class MarkdownRenderer extends Component{
       renderers: {
         ...props.renderers,
         code: Codeblock,
-        math: (p) =>{
-          return(
+        math: (p) => {
+          return (
             <MathJax.Node inline >{p.value}</MathJax.Node>
           )
         },
         inlineMath: (p) => {
-          return(
+          return (
             <MathJax.Node inline >{p.value}</MathJax.Node>
           )
         },
@@ -40,7 +41,9 @@ class MarkdownRenderer extends Component{
 
     return (
       <MathJax.Context input="tex">
-        <ReactMarkdown {...newProps} />
+        <div className='markdown-body'>
+          <ReactMarkdown {...newProps} />
+        </div>
       </MathJax.Context>
     )
   }
