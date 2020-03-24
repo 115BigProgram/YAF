@@ -1,0 +1,8 @@
+{
+  "success": true,
+  "data": {
+    "推荐": [],
+    "数据挖掘": [{"name":"全部","api":"*"},{"name":"线性回归","api":"li"},{"name":"决策树","api":"dt"}],
+    "神经网络": [{"name":"全部","api":"*"},{"name":"CNN","api":"cnn"},{"name":"RNN","api":"rnn"}]
+  }
+}
