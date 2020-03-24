@@ -115,9 +115,6 @@ class Header extends Component {
                                 <Link to="/write">
                                     <NavItem className="left">写文章</NavItem>
                                 </Link>
-                                <NavItem className="right">
-                                    我的收藏
-                                </NavItem>
                             </NonHomeItemWrapper>
                         </NavWrapper>
                         <NavSearch />
