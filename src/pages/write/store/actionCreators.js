@@ -1,6 +1,6 @@
 import * as constants from "./constants";
-import httpClient, { client,handleErr, handleResponse } from "../../../client"
-import Qs from 'qs' 
+import httpClient, { client, handleErr, handleResponse } from "../../../client"
+import Qs from 'qs'
 
 const getFields = (getState, field) => {
     const store = getState().toJS().write
@@ -32,27 +32,35 @@ const commitArticleAction = (data) => ({
     data: data
 })
 export const setSelectedTopic = (selectedTopic) => {
-    return(dispatch, getState) => {
+    return (dispatch, getState) => {
         dispatch(setSelectTopic(selectedTopic))
         return
     }
 }
 export const commitArticle = (articleInfo) => {
-    return(dispatch, getState) => {
+    return (dispatch, getState) => {
         console.log(articleInfo)
-    client
-                    .get("/addArticle?title="+articleInfo.title+"&domainID="+articleInfo.domainID+"&topicID="+articleInfo.topicID+"&content="+articleInfo.content+"&authorID="+articleInfo.authorID+"&authorName="+articleInfo.authorName+"&publishDate="+articleInfo.publishDate)
-                    .then(res => {
-                        let resData = handleResponse(res)
-                        alert("添加文章成功！")
-                        window.location.reload()
-                        return
-                    })
-                    .catch(err => {
-                        handleErr(err)
-                    }) 
-    dispatch(commitArticleAction(articleInfo))      
-    }         
+        client
+            .post("/addArticle", {
+                title: articleInfo.title,
+                domainID: articleInfo.domainID,
+                topicID: articleInfo.topicID,
+                content: articleInfo.content,
+                authorID: articleInfo.authorID,
+                authorName: articleInfo.authorName,
+                publishDate: articleInfo.publishDate
+            })
+            .then(res => {
+                let resData = handleResponse(res)
+                alert("添加文章成功！")
+                window.location.reload()
+                return
+            })
+            .catch(err => {
+                handleErr(err)
+            })
+        dispatch(commitArticleAction(articleInfo))
+    }
 }
 export const getDomains = () => {
     return (dispatch, getState) => {
@@ -96,26 +104,26 @@ export const getDomains = () => {
             })
     }
 }
-export const getTopics = (domainID) =>{
-    return(dispatch,getState) => {
+export const getTopics = (domainID) => {
+    return (dispatch, getState) => {
         let data = {}
         httpClient
-                    .get("/topics?domain=" + domainID)
-                    .then(res => {
-                        let topics = handleResponse(res)
-                        if (topics.length == 0) {
-                            data.topics = [{ id: null, domain: "无" }]
-                            dispatch(getTopicAction(data))
-                            return
-                        }
-                        data.topics = topics
-                        data.domain = domainID
-                        dispatch(getTopicAction(data))
-                        return
-                    })
-                    .catch(err => {
-                        handleErr(err)
-                    })
+            .get("/topics?domain=" + domainID)
+            .then(res => {
+                let topics = handleResponse(res)
+                if (topics.length == 0) {
+                    data.topics = [{ id: null, domain: "无" }]
+                    dispatch(getTopicAction(data))
+                    return
+                }
+                data.topics = topics
+                data.domain = domainID
+                dispatch(getTopicAction(data))
+                return
+            })
+            .catch(err => {
+                handleErr(err)
+            })
     }
 }
 

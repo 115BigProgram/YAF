@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Provider } from "react-redux";
-import { BrowserRouter, Route } from "react-router-dom";
+import { BrowserRouter, Route, HashRouter } from "react-router-dom";
 import Header from "./common/header";
 import Home from "./pages/home";
 import Detail from "./pages/detail/loadable.js";
@@ -16,7 +16,7 @@ class App extends Component {
     return (
       <Provider store={store}>
         <div>
-          <BrowserRouter>
+          <HashRouter>
             <div>
               <TopNavBarContainer>
                 <Header />
@@ -33,7 +33,7 @@ class App extends Component {
                 </MainContainer>
               </div>
             </div>
-          </BrowserRouter>
+          </HashRouter>
         </div>
       </Provider>
     );
